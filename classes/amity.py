@@ -125,3 +125,19 @@ class Amity(object):
               return 'you entered some wrong value, cross check and try again!'
       else:
           return 'please check the values you entered, all must be letters.'
+
+
+    def print_unallocated_people(self):
+          """Prints all the people without rooms to the screen"""
+
+          all_people_without_rooms = []
+          if self.rooms['unallocated']['office']:
+              for person in self.rooms['unallocated']['office']:
+                  all_people_without_rooms.append(person)
+
+          if self.rooms['unallocated']['living_space']:
+              for person in self.rooms['unallocated']['living_space']:
+                  all_people_without_rooms.append(person)
+
+          for numbering, people in enumerate(all_people_without_rooms, 1):
+              print numbering, people.person_name
