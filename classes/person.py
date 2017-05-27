@@ -6,7 +6,7 @@ class Person(object):
     def __init__(self, first_name, second_name, person_type, lspace_option='N'):
         self.first_name = first_name
         self.second_name = second_name
-        self.person_name = '%s %s' % (self.first_name, self.second_name)
+        self.person_name = '{} {}'.format(self.first_name, self.second_name)
         self.person_type = person_type
         self.lspace_option = lspace_option
 
