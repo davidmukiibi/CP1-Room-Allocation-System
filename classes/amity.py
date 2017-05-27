@@ -153,3 +153,15 @@ class Amity(object):
               all_rooms.append(lspace_names)
 
           return 'these are the rooms we have in amity: {}'.format(all_rooms)
+
+
+    def all_the_people_in_all_offices(self):
+      """prints out al the people in offices in amity"""
+
+      all_people_in_offices = []
+      for room_name, people_objects in self.rooms['offices'].items():
+          for each_person_object in people_objects:
+              all_people_in_offices.append(each_person_object.person_name)
+
+      for numbering, people in enumerate(all_people_in_offices, 1):
+          print numbering, people
