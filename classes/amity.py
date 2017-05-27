@@ -177,3 +177,27 @@ class Amity(object):
 
       for numbering, people in enumerate(all_people_in_living_spaces, 1):
           print numbering, people
+
+
+    def display_people_in_room(self, room_name):
+          """This displays people in a given room (office or living space) are displayed on screen"""
+          if isinstance(room_name, str):
+              if room_name in self.rooms['living_spaces'].keys():
+                  if self.rooms['living_spaces'][room_name]:
+                      for person in self.rooms['living_spaces'][room_name]:
+                          print person.person_name
+                  else:
+                      return '{} is empty.'.format(room_name)
+
+              if room_name in self.rooms['offices'].keys():
+                  if self.rooms['offices'][room_name]:
+                      for person in self.rooms['offices'][room_name]:
+                          print person.person_name
+                  else:
+                      return '{} is empty.'.format(room_name)
+
+              if (room_name not in self.rooms['offices'].keys()) and (room_name not in self.rooms['living_spaces'].keys()):
+                  return '{} does not exist in amity!'.format(room_name)
+
+          else:
+              return '{} is not a string!'.format(room_name)
