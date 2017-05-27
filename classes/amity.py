@@ -201,3 +201,47 @@ class Amity(object):
 
           else:
               return '{} is not a string!'.format(room_name)
+
+
+    def reallocate(self, person_name, new_room_name):
+          """method re-allocates a person from one room to another"""
+
+          if isinstance(person_name, str) and isinstance(new_room_name, str):
+
+              # all_offices = []
+              # all_living_spaces = []
+              # for key, value in self.rooms['offices'].items():
+              #     all_offices.append(key)
+              # for lspace, ls_occupants in self.rooms['offices'].items():
+              #     all_living_spaces.append(lspace)
+
+              if new_room_name in self.rooms['offices'].keys():
+                  for room in self.rooms['offices'].keys():
+                      for person in self.rooms['offices'][room]:
+                          if person_name == person.person_name:
+                              if room == new_room_name:
+                                  return '{} is already in {}'.format(person_name,
+                                                                      new_room_name)
+                              else:
+                                  self.rooms['offices'][new_room_name].append(person)
+                                  self.rooms['offices'][room].remove(person)
+                                  return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
+
+              elif new_room_name in self.rooms['living_spaces'].keys():
+                  for room in self.rooms['living_spaces'].keys():
+                      if new_room_name in self.rooms['living_spaces'].keys():
+                          for room in self.rooms['living_spaces'].keys():
+                              for person in self.rooms['living_spaces'][room]:
+                                  if person_name == person.person_name:
+                                      if room == new_room_name:
+                                          return '{} is already in {}'.format(person_name,
+                                                                              new_room_name)
+                                      else:
+                                          self.rooms['living_spaces'][new_room_name].append(person)
+                                          self.rooms['living_spaces'][room].remove(person)
+                                          return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
+
+              else:
+                  return 'oops {} does not exist in amity!'.format(new_room_name)
+          else:
+              return 'Either {} or {} is not a string!'.format(person_name, new_room_name)
