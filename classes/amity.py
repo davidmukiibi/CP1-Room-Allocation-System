@@ -14,267 +14,270 @@ class Amity(object):
                                                                     'living_space': [],},}
 
     def create_room(self, room_name, room_type):
-          """this method creates a room, either an office or a living space
-          and adds it to the respectives dictionary values"""
+        """this method creates a room, either an office or a living space
+        and adds it to the respectives dictionary values"""
 
-          if isinstance(room_name, str) and isinstance(room_type, str):
-              if room_type.lower() == 'o':
-                  office = Office(room_name=room_name, room_type='o')
-                  self.rooms['offices'].update({office.room_name: office.office_occupants})
-                  print '{} office created successfully.'.format(office.room_name)
+        if isinstance(room_name, str) and isinstance(room_type, str):
+            if room_type.lower() == 'o':
+                office = Office(room_name=room_name, room_type='o')
+                self.rooms['offices'].update({office.room_name: office.office_occupants})
+                print '{} office created successfully.'.format(office.room_name)
 
-              elif room_type.lower() == 'l':
-                  lspace = LivingSpace(room_name=room_name, room_type='l')
-                  self.rooms['living_spaces'].update({lspace.room_name: lspace.living_space_occupants
-                                                     })
-                  print '{} living space created successfully.'.format(lspace.room_name)
+            elif room_type.lower() == 'l':
+                lspace = LivingSpace(room_name=room_name, room_type='l')
+                self.rooms['living_spaces'].update({lspace.room_name: lspace.living_space_occupants
+                                                   })
+                print '{} living space created successfully.'.format(lspace.room_name)
 
-              else:
-                  print '{} wrong room type entered.'.format(room_type)
+            else:
+                print '{} wrong room type entered.'.format(room_type)
 
-          else:
-              print 'Either {} or {} is not a string, please check and try again!'.format(room_name,
-                                                                                          room_type)
+        else:
+            print 'Either {} or {} is not a string, please check and try again!'.format(room_name,
+                                                                                        room_type)
 
 
     def add_person(self, first_name, second_name, person_type, lspace_option='N'):
-      """this method adds a person to the system and assigns them an office and/or
-      living space if they are eligible and/or if they with to opt for it."""
+        """this method adds a person to the system and assigns them an office and/or
+        living space if they are eligible and/or if they with to opt for it."""
 
-      if (isinstance(first_name, str) and isinstance(second_name, str)
-              and isinstance(person_type, str) and isinstance(lspace_option, str)):
+        if (isinstance(first_name, str) and isinstance(second_name, str)
+                and isinstance(person_type, str) and isinstance(lspace_option, str)):
 
-          fellow = Fellow(first_name=first_name, second_name=second_name, person_type='FELLOW'
+            fellow = Fellow(first_name=first_name, second_name=second_name, person_type='FELLOW'
+                            , lspace_option='N')
+            staff = Staff(first_name=first_name, second_name=second_name, person_type='STAFF'
                           , lspace_option='N')
-          staff = Staff(first_name=first_name, second_name=second_name, person_type='STAFF'
-                        , lspace_option='N')
-          if person_type.upper() == 'STAFF':
-              if self.rooms['offices']:
-                  for an_office, occupants in self.rooms['offices'].items():
-                      if len(occupants) < 5:
-                          self.rooms['offices'][an_office].append(staff)
-                          # import ipdb; ipdb.set_trace()
-                          return '{} was added successfully to office: {}.'.\
-                                      format(staff.person_name, an_office)
-                      else:
-                          self.rooms['unallocated']['office'].append(staff)
-              else:
-                  return 'No offices avalaible at the moment, contact facilities dept!'
+            if person_type.upper() == 'STAFF':
+                if self.rooms['offices']:
+                    for an_office, occupants in self.rooms['offices'].items():
+                        if len(occupants) < 5:
+                            self.rooms['offices'][an_office].append(staff)
+                            # import ipdb; ipdb.set_trace()
+                            return '{} was added successfully to office: {}.'.\
+                                        format(staff.person_name, an_office)
+                        else:
+                            self.rooms['unallocated']['office'].append(staff)
+                else:
+                    return 'No offices avalaible at the moment, contact facilities dept!'
 
-          elif person_type.upper() == 'FELLOW' and lspace_option.upper() == 'N':
-              if self.rooms['offices']:
-                  for an_office, occupants in self.rooms['offices'].items():
-                      if len(occupants) < 5:
-                          self.rooms['offices'][an_office].append(fellow)
-                          return '{} was added successfully to office: {}'.\
-                                      format(fellow.person_name, an_office)
-                      else:
-                          self.rooms['unallocated']['office'].append(fellow)
-                          return 'All offices are fully occupied at the moment.'
-              else:
-                  self.rooms['unallocated']['office'].append(fellow)
-                  return 'No offices available at the time.'
+            elif person_type.upper() == 'FELLOW' and lspace_option.upper() == 'N':
+                if self.rooms['offices']:
+                    for an_office, occupants in self.rooms['offices'].items():
+                        if len(occupants) < 5:
+                            self.rooms['offices'][an_office].append(fellow)
+                            return '{} was added successfully to office: {}'.\
+                                        format(fellow.person_name, an_office)
+                        else:
+                            self.rooms['unallocated']['office'].append(fellow)
+                            return 'All offices are fully occupied at the moment.'
+                else:
+                    self.rooms['unallocated']['office'].append(fellow)
+                    return 'No offices available at the time.'
 
-          elif person_type.upper() == 'FELLOW' and lspace_option.upper() == 'Y':
-              if self.rooms['offices']:
-                  for an_office, occupants in self.rooms['offices'].items():
-                      if len(occupants) < 5:
-                          self.rooms['offices'][an_office].append(fellow)
-                          print 'Fellow has been added successfully to office: {}'.\
-                                                                      format(an_office)
-                          if self.rooms['living_spaces']:
-                              for a_living_space, ls_occupants in self.rooms['living_spaces'].\
-                                                                  items():
-                                  if len(ls_occupants) < 7:
-                                      self.rooms['living_spaces'][a_living_space].append(fellow)
-                                      return 'Fellow added successfully to living space: '\
-                                                                  '{}'.format(a_living_space)
-                                  else:
-                                      self.rooms['unallocated']['living_space'].append(fellow)
-                                      return 'no living spaces available right now!'
-                          else:
-                              return 'no living spaces at the moment'
-                      else:
-                          print 'No offices available at the time'
-                          self.rooms['unallocated']['office'].append(fellow)
-                          if self.rooms['living_spaces']:
-                              for a_living_space, ls_occupants in self.rooms['living_spaces'].\
-                                                                  items():
-                                  if len(ls_occupants) < 7:
-                                      self.rooms['living_spaces'][a_living_space].append(fellow)
-                                      return 'Fellow has been added successfully to living space'\
-                                                                  '{}'.format(a_living_space)
-                                  else:
-                                      self.rooms['unallocated']['living_space'].append(fellow)
-                                      return 'no living spaces available right now!'
-              else:
-                  self.rooms['unallocated']['offices'].append(fellow)
-                  print 'No offices available at the time'
-                  if self.rooms['living_spaces']:
-                      for a_living_space, ls_occupants in self.rooms['living_spaces'].\
-                                                          items():
-                          if len(ls_occupants) < 7:
-                              self.rooms['living_spaces'][a_living_space].append(fellow)
-                              return 'Fellow has been added successfully to living space'\
-                                                          '{}'.format(a_living_space)
-                          else:
-                              self.rooms['unallocated']['living_space'].append(fellow)
-                              return 'no living spaces available right now!'
+            elif person_type.upper() == 'FELLOW' and lspace_option.upper() == 'Y':
+                if self.rooms['offices']:
+                    for an_office, occupants in self.rooms['offices'].items():
+                        if len(occupants) < 5:
+                            self.rooms['offices'][an_office].append(fellow)
+                            print 'Fellow has been added successfully to office: {}'.\
+                                                                        format(an_office)
+                            if self.rooms['living_spaces']:
+                                for a_living_space, ls_occupants in self.rooms['living_spaces'].\
+                                                                    items():
+                                    if len(ls_occupants) < 7:
+                                        self.rooms['living_spaces'][a_living_space].append(fellow)
+                                        return 'Fellow added successfully to living space: '\
+                                                                    '{}'.format(a_living_space)
+                                    else:
+                                        self.rooms['unallocated']['living_space'].append(fellow)
+                                        return 'no living spaces available right now!'
+                            else:
+                                return 'no living spaces at the moment'
+                        else:
+                            print 'No offices available at the time'
+                            self.rooms['unallocated']['office'].append(fellow)
+                            if self.rooms['living_spaces']:
+                                for a_living_space, ls_occupants in self.rooms['living_spaces'].\
+                                                                    items():
+                                    if len(ls_occupants) < 7:
+                                        self.rooms['living_spaces'][a_living_space].append(fellow)
+                                        return 'Fellow has been added successfully to living space'\
+                                                                    '{}'.format(a_living_space)
+                                    else:
+                                        self.rooms['unallocated']['living_space'].append(fellow)
+                                        return 'no living spaces available right now!'
+                else:
+                    self.rooms['unallocated']['offices'].append(fellow)
+                    print 'No offices available at the time'
+                    if self.rooms['living_spaces']:
+                        for a_living_space, ls_occupants in self.rooms['living_spaces'].\
+                                                            items():
+                            if len(ls_occupants) < 7:
+                                self.rooms['living_spaces'][a_living_space].append(fellow)
+                                return 'Fellow has been added successfully to living space'\
+                                                            '{}'.format(a_living_space)
+                            else:
+                                self.rooms['unallocated']['living_space'].append(fellow)
+                                return 'no living spaces available right now!'
 
-          else:
-              return 'you entered some wrong value, cross check and try again!'
-      else:
-          return 'please check the values you entered, all must be letters.'
+            else:
+                return 'you entered some wrong value, cross check and try again!'
+        else:
+            return 'please check the values you entered, all must be letters.'
 
 
     def print_unallocated_people(self):
-          """Prints all the people without rooms to the screen"""
+        """Prints all the people without rooms to the screen"""
 
-          all_people_without_rooms = []
-          if self.rooms['unallocated']['office']:
-              for person in self.rooms['unallocated']['office']:
-                  all_people_without_rooms.append(person)
+        all_people_without_rooms = []
+        if self.rooms['unallocated']['office']:
+            for person in self.rooms['unallocated']['office']:
+                all_people_without_rooms.append(person)
 
-          if self.rooms['unallocated']['living_space']:
-              for person in self.rooms['unallocated']['living_space']:
-                  all_people_without_rooms.append(person)
+        if self.rooms['unallocated']['living_space']:
+            for person in self.rooms['unallocated']['living_space']:
+                all_people_without_rooms.append(person)
 
-          for numbering, people in enumerate(all_people_without_rooms, 1):
-              print numbering, people.person_name
+        for numbering, people in enumerate(all_people_without_rooms, 1):
+            print numbering, people.person_name
 
     def all_the_rooms_in_amity(self):
-          """Prints all rooms there are in Amity"""
+        """Prints all rooms there are in Amity"""
 
-          all_rooms = []
-          for office_name, office_occupants in self.rooms['offices'].items():
-              all_rooms.append(office_name)
+        all_rooms = []
+        for office_name, office_occupants in self.rooms['offices'].items():
+            all_rooms.append(office_name)
 
-          for lspace_names, lspace_occupants in self.rooms['living_spaces'].items():
-              all_rooms.append(lspace_names)
+        for lspace_names, lspace_occupants in self.rooms['living_spaces'].items():
+            all_rooms.append(lspace_names)
 
-          return 'these are the rooms we have in amity: {}'.format(all_rooms)
+        return 'these are the rooms we have in amity: {}'.format(all_rooms)
 
 
     def all_the_people_in_all_offices(self):
-      """prints out al the people in offices in amity"""
+        """prints out al the people in offices in amity"""
 
-      all_people_in_offices = []
-      for room_name, people_objects in self.rooms['offices'].items():
-          for each_person_object in people_objects:
-              all_people_in_offices.append(each_person_object.person_name)
+        all_people_in_offices = []
+        for room_name, people_objects in self.rooms['offices'].items():
+            for each_person_object in people_objects:
+                all_people_in_offices.append(each_person_object.person_name)
 
-      for numbering, people in enumerate(all_people_in_offices, 1):
-          print numbering, people
+        for numbering, people in enumerate(all_people_in_offices, 1):
+            print numbering, people
 
 
     def all_people_in_all_living_spaces(self):
-      """prints out al the people in living spaces in amity"""
+        """prints out al the people in living spaces in amity"""
 
-      all_people_in_living_spaces = []
-      for ls_name, fellow_objects in self.rooms['living_spaces'].items():
-          for each_fellow_object in fellow_objects:
-              all_people_in_living_spaces.append(each_fellow_object.person_name)
+        all_people_in_living_spaces = []
+        for ls_name, fellow_objects in self.rooms['living_spaces'].items():
+            for each_fellow_object in fellow_objects:
+                all_people_in_living_spaces.append(each_fellow_object.person_name)
 
-      for numbering, people in enumerate(all_people_in_living_spaces, 1):
-          print numbering, people
+        for numbering, people in enumerate(all_people_in_living_spaces, 1):
+            print numbering, people
 
 
     def display_people_in_room(self, room_name):
-          """This displays people in a given room (office or living space) are displayed on screen"""
-          if isinstance(room_name, str):
-              if room_name in self.rooms['living_spaces'].keys():
-                  if self.rooms['living_spaces'][room_name]:
-                      for person in self.rooms['living_spaces'][room_name]:
-                          print person.person_name
-                  else:
-                      return '{} is empty.'.format(room_name)
+        """This displays people in a given room (office or living space) are displayed on screen"""
 
-              if room_name in self.rooms['offices'].keys():
-                  if self.rooms['offices'][room_name]:
-                      for person in self.rooms['offices'][room_name]:
-                          print person.person_name
-                  else:
-                      return '{} is empty.'.format(room_name)
+        if isinstance(room_name, str):
+            if room_name in self.rooms['living_spaces'].keys():
+                if self.rooms['living_spaces'][room_name]:
+                    for person in self.rooms['living_spaces'][room_name]:
+                        print person.person_name
+                else:
+                    return '{} is empty.'.format(room_name)
 
-              if (room_name not in self.rooms['offices'].keys()) and (room_name not in self.rooms['living_spaces'].keys()):
-                  return '{} does not exist in amity!'.format(room_name)
+            if room_name in self.rooms['offices'].keys():
+                if self.rooms['offices'][room_name]:
+                    for person in self.rooms['offices'][room_name]:
+                        print person.person_name
+                else:
+                    return '{} is empty.'.format(room_name)
 
-          else:
-              return '{} is not a string!'.format(room_name)
+            if (room_name not in self.rooms['offices'].keys()) and (room_name not in self.rooms['living_spaces'].keys()):
+                return '{} does not exist in amity!'.format(room_name)
+
+        else:
+            return '{} is not a string!'.format(room_name)
 
 
     def reallocate(self, person_name, new_room_name):
-          """method re-allocates a person from one room to another"""
+        """method re-allocates a person from one room to another"""
 
-          if isinstance(person_name, str) and isinstance(new_room_name, str):
+        if isinstance(person_name, str) and isinstance(new_room_name, str):
+            if new_room_name in self.rooms['offices'].keys():
+                for room in self.rooms['offices'].keys():
+                    for person in self.rooms['offices'][room]:
+                        if person_name == person.person_name:
+                            if room == new_room_name:
+                                return '{} is already in {}'.format(person_name,
+                                                                    new_room_name)
+                            else:
+                                self.rooms['offices'][new_room_name].append(person)
+                                self.rooms['offices'][room].remove(person)
+                                return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
 
-              if new_room_name in self.rooms['offices'].keys():
-                  for room in self.rooms['offices'].keys():
-                      for person in self.rooms['offices'][room]:
-                          if person_name == person.person_name:
-                              if room == new_room_name:
-                                  return '{} is already in {}'.format(person_name,
-                                                                      new_room_name)
-                              else:
-                                  self.rooms['offices'][new_room_name].append(person)
-                                  self.rooms['offices'][room].remove(person)
-                                  return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
+            elif new_room_name in self.rooms['living_spaces'].keys():
+                for room in self.rooms['living_spaces'].keys():
+                    if new_room_name in self.rooms['living_spaces'].keys():
+                        for room in self.rooms['living_spaces'].keys():
+                            for person in self.rooms['living_spaces'][room]:
+                                if person_name == person.person_name:
+                                    if room == new_room_name:
+                                        return '{} is already in {}'.format(person_name,
+                                                                            new_room_name)
+                                    else:
+                                        self.rooms['living_spaces'][new_room_name].append(person)
+                                        self.rooms['living_spaces'][room].remove(person)
+                                        return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
 
-              elif new_room_name in self.rooms['living_spaces'].keys():
-                  for room in self.rooms['living_spaces'].keys():
-                      if new_room_name in self.rooms['living_spaces'].keys():
-                          for room in self.rooms['living_spaces'].keys():
-                              for person in self.rooms['living_spaces'][room]:
-                                  if person_name == person.person_name:
-                                      if room == new_room_name:
-                                          return '{} is already in {}'.format(person_name,
-                                                                              new_room_name)
-                                      else:
-                                          self.rooms['living_spaces'][new_room_name].append(person)
-                                          self.rooms['living_spaces'][room].remove(person)
-                                          return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
-
-              else:
-                  return 'oops {} does not exist in amity!'.format(new_room_name)
-          else:
-              return 'Either {} or {} is not a string!'.format(person_name, new_room_name)
+            else:
+                return 'oops {} does not exist in amity!'.format(new_room_name)
+        else:
+            return 'Either {} or {} is not a string!'.format(person_name, new_room_name)
 
 
     def load_people(self, filename):
         """ This method adds people to rooms from a txt file. """
+
         docpath = os.path.dirname(__file__)
         filepath = os.path.join(docpath, filename + ".txt")
         if not os.path.isfile(filepath):
-          return "{} is not a valid file path.".format(filepath)
+            return "{} is not a valid file path.".format(filepath)
 
         with open(filepath, 'r') as f:
-          for each_line in f:
-              words_list = each_line.split()
-              first_name = words_list[0]
-              second_name = words_list[1]
-              person_type = words_list[2]
+            for each_line in f:
+                words_list = each_line.split()
+                first_name = words_list[0]
+                second_name = words_list[1]
+                person_type = words_list[2]
 
-              if len(words_list) < 4:
-                  lspace_option= "N"
-              else:
-                  lspace_option = words_list[3]
-              self.add_person(first_name, second_name, person_type, lspace_option)
+                if len(words_list) < 4:
+                    lspace_option= "N"
+                else:
+                    lspace_option = words_list[3]
+                self.add_person(first_name, second_name, person_type, lspace_option)
         return "People were loaded successfully!"
 
     def load_rooms(self, filename):
-          """Emthod loads rooms from a text file"""
-          docpath = os.path.dirname(__file__)
-          filepath = os.path.join(docpath, filename + ".txt")
-          if not os.path.isfile(filepath):
-              return "{} is not a valid file path or file doesnt exist or wrong file name.".format(filepath)
-          with open(filepath, 'r') as f:
-              for each_line in f:
-                  words_list = each_line.split()
-                  room_name = words_list[0]
-                  room_type = words_list[1]
+        """method loads rooms from a text file"""
 
-                  self.create_room(room_name, room_type)
-                  return "Rooms were created successfully!"
+        docpath = os.path.dirname(__file__)
+        filepath = os.path.join(docpath, filename + ".txt")
+        if not os.path.isfile(filepath):
+            return "{} is not a valid file path or file doesnt exist or wrong file name.".\
+                                                                                format(filepath)
+        with open(filepath, 'r') as f:
+            for each_line in f:
+                words_list = each_line.split()
+                room_name = words_list[0]
+                room_type = words_list[1]
+
+                self.create_room(room_name, room_type)
+        return "Rooms were loaded successfully!"
 
 
 
@@ -282,51 +285,123 @@ class Amity(object):
 
 
     def remove_person(self, name):
-            """removes a person from amity"""
+        """removes a person from amity"""
 
-            if isinstance(name, str):
-              for room in self.rooms['offices']:
-                  for room_name, occupants in self.rooms['offices'].items():
-                      for each_occupant in occupants:
-                          if name == each_occupant.person_name:
-                              self.rooms['offices'][room_name].remove(each_occupant)
-
-                              return '{} was removed successfully from {}.'.format(each_occupant.person_name, room_name)
-
-              for room in self.rooms['living_spaces']:
-                  for room_name, occupants in self.rooms['living_spaces'].items():
-                      for each_occupant in occupants:
-                          if name == each_occupant.person_name:
-                              self.rooms['living_spaces'][room_name].remove(each_occupant)
-
-                              return '{} was removed successfully from {}.'.format(each_occupant.person_name, room_name)
-
-            else:
-              return '{} is not a string!'.format(name)
-
-
-
+        if isinstance(name, str):
+            for room in self.rooms['offices']:
+                for room_name, occupants in self.rooms['offices'].items():
+                    for each_occupant in occupants:
+                        if name == each_occupant.person_name:
+                            self.rooms['offices'][room_name].remove(each_occupant)
+                            return '{} was removed successfully from {}.'.\
+                                                        format(each_occupant.person_name, room_name)
+            for room in self.rooms['living_spaces']:
+                for room_name, occupants in self.rooms['living_spaces'].items():
+                    for each_occupant in occupants:
+                        if name == each_occupant.person_name:
+                            self.rooms['living_spaces'][room_name].remove(each_occupant)
+                            return '{} was removed successfully from {}.'.\
+                                                        format(each_occupant.person_name, room_name)
+        else:
+            return '{} is not a string!'.format(name)
 
     def remove_room(self, room_name):
-      if isinstance(room_name, str):
-          if room_name in self.rooms['offices'].keys():
-              if self.rooms['offices'][room_name]:
-                  return '{} can not be deleted because it is not emoty.'.format(room_name)
+        """Method deletes a room from amity."""
 
-              else:
-                  del self.rooms['offices'][room_name]
-                  return '{} was removed successfully!'.format(room_name)
+        if isinstance(room_name, str):
+            if room_name in self.rooms['offices'].keys():
+                if self.rooms['offices'][room_name]:
+                    return '{} can not be deleted because it is not emoty.'.format(room_name)
 
-          elif room_name in self.rooms['living_spaces'].keys():
-              if self.rooms['living_spaces'][room_name]:
-                  return '{} can not be deleted because it is not emoty.'.format(room_name)
+                else:
+                    del self.rooms['offices'][room_name]
+                    return '{} was removed successfully!'.format(room_name)
 
-              else:
-                  del self.rooms['living_spaces'][room_name]
-                  return '{} was removed successfully!'.format(room_name)
+            elif room_name in self.rooms['living_spaces'].keys():
+                if self.rooms['living_spaces'][room_name]:
+                    return '{} can not be deleted because it is not emoty.'.format(room_name)
 
-          else:
-              return 'You are trying to delete room: {} that doesnt exist.'.format(room_name)
+                else:
+                    del self.rooms['living_spaces'][room_name]
+                    return '{} was removed successfully!'.format(room_name)
 
-      else:
-          return '{} entered is not a string.'.format(room_name)
+            else:
+                return 'You are trying to delete room: {} that doesnt exist.'.format(room_name)
+
+        else:
+            return '{} entered is not a string.'.format(room_name)
+
+
+    def print_allocations(self, filename=None):
+        """Prints all rooms with occupants in amity plus there occupants"""
+
+        if not filename:
+            for each_room, room_occupants in self.rooms['offices'].items():
+                if room_occupants:
+                    print '{}'.format(each_room)
+                    for numbering, people in enumerate(room_occupants, 1):
+                        print numbering, people.person_name
+                else:
+                    print '{} is empty at the moment!'.format(each_room)
+
+            for each_room, room_occupants in self.rooms['living_spaces'].items():
+                if room_occupants:
+                    print '{}'.format(each_room)
+                    for numbering, people in enumerate(room_occupants, 1):
+                        print numbering, people.person_name
+                else:
+                    print '{} is empty at the moment!'.format(each_room)
+
+        # else:
+        #     # create file with the given filename and write res to it
+        #     txt_file = open(filename + ".txt", "w+")
+        #     txt_file.write(response)
+        #     txt_file.close()
+        #     return msg
+        """this is on hold"""
+
+
+    def save_state(self):
+      pass
+
+    def load_state(self):
+      pass
+
+
+amity = Amity()
+amity.create_room('narnia', 'o')
+amity.create_room('hogwarts', 'o')
+amity.create_room('mordor', 'l')
+amity.create_room('oculus', 'l')
+print amity.add_person('david', 'mukiibi', 'FELLOW', 'Y')
+print amity.add_person('david', 'scott', 'STAFF', 'N')
+#print amity.print_unallocated_people()
+#print amity.all_the_rooms_in_amity()
+# print amity.reallocate('david mukiibi', 'hogwarts')
+# print amity.display_people_in_room('hogwarts')
+#print amity.display_people_in_room('narnia')
+#print amity.display_people_in_room('mordor')
+# amity.all_the_rooms_in_amity()
+#amity.print_allocations()
+# print amity.reallocate('david scott', 'hogwarts')
+# # print amity.reallocate('david scott', 'hogwarts')
+# print amity.display_people_in_room('hogwarts')
+# print amity.display_people_in_room('narnia')
+# print amity.display_people_in_room('oculus')
+# print amity.reallocate('david mukiibi', 'mord')
+# print amity.display_people_in_room('oculus')
+# print amity.display_people_in_room('mordor')
+# print amity.load_people('sample_output')
+# print amity.all_the_people_in_all_offices()
+# print amity.all_people_in_all_living_spaces()
+# print amity.print_unallocated_people()
+print amity.load_rooms('sample_rooms_input')
+# print amity.display_people_in_room('narnia')
+# print amity.remove_person('david mukiibi')
+print amity.display_people_in_room('narnia')
+# print amity.all_the_rooms_in_amity()
+# #print amity.display_people_in_room('oculus')
+#print amity.remove_room('narnia')
+print amity.all_the_rooms_in_amity()
+print amity.all_people_in_all_living_spaces()
+# amity.print_allocations()

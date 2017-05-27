@@ -7,7 +7,7 @@ class Room(object):
     def __init__(self, room_name, room_type):
         self.room_name = room_name
         self.room_type = room_type
-        
+
 
 class LivingSpace(Room):
     """living space blueprint but also inherits from the Room class"""
