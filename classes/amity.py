@@ -141,3 +141,15 @@ class Amity(object):
 
           for numbering, people in enumerate(all_people_without_rooms, 1):
               print numbering, people.person_name
+
+    def all_the_rooms_in_amity(self):
+          """Prints all rooms there are in Amity"""
+
+          all_rooms = []
+          for office_name, office_occupants in self.rooms['offices'].items():
+              all_rooms.append(office_name)
+
+          for lspace_names, lspace_occupants in self.rooms['living_spaces'].items():
+              all_rooms.append(lspace_names)
+
+          return 'these are the rooms we have in amity: {}'.format(all_rooms)
