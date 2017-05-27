@@ -208,13 +208,6 @@ class Amity(object):
 
           if isinstance(person_name, str) and isinstance(new_room_name, str):
 
-              # all_offices = []
-              # all_living_spaces = []
-              # for key, value in self.rooms['offices'].items():
-              #     all_offices.append(key)
-              # for lspace, ls_occupants in self.rooms['offices'].items():
-              #     all_living_spaces.append(lspace)
-
               if new_room_name in self.rooms['offices'].keys():
                   for room in self.rooms['offices'].keys():
                       for person in self.rooms['offices'][room]:
@@ -245,3 +238,26 @@ class Amity(object):
                   return 'oops {} does not exist in amity!'.format(new_room_name)
           else:
               return 'Either {} or {} is not a string!'.format(person_name, new_room_name)
+
+
+    def load_people(self, filename):
+      """ This method adds people to rooms from a txt file. """
+      docpath = os.path.dirname(__file__)
+      filepath = os.path.join(docpath, filename + ".txt")
+      print filepath
+      if not os.path.isfile(filepath):
+          return "{} is not a valid file path.".format(filepath)
+
+      with open(filepath, 'r') as f:
+          for each_line in f:
+              words_list = each_line.split()
+              first_name = words_list[0]
+              second_name = words_list[1]
+              person_type = words_list[2]
+
+              if len(words_list) < 4:
+                  lspace_option= "N"
+              else:
+                  lspace_option = words_list[3]
+              self.add_person(first_name, second_name, person_type, lspace_option)
+      return "People were loaded successfully!"
