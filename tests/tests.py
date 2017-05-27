@@ -9,6 +9,7 @@ from person import Person, Fellow, Staff
 
 
 class AmityTests(object):
+    """Class that holds all the tests of the amity room allocation system"""
 
     def setUp(self):
         """setting up resources/dependencies these tests rely on to run."""
