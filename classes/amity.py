@@ -261,8 +261,7 @@ class Amity(object):
               self.add_person(first_name, second_name, person_type, lspace_option)
         return "People were loaded successfully!"
 
-
-      def load_rooms(self, filename):
+    def load_rooms(self, filename):
           """Emthod loads rooms from a text file"""
           docpath = os.path.dirname(__file__)
           filepath = os.path.join(docpath, filename + ".txt")
@@ -276,3 +275,31 @@ class Amity(object):
 
                   self.create_room(room_name, room_type)
                   return "Rooms were created successfully!"
+
+
+
+
+
+
+    def remove_person(self, name):
+            """removes a person from amity"""
+
+            if isinstance(name, str):
+              for room in self.rooms['offices']:
+                  for room_name, occupants in self.rooms['offices'].items():
+                      for each_occupant in occupants:
+                          if name == each_occupant.person_name:
+                              self.rooms['offices'][room_name].remove(each_occupant)
+
+                              return '{} was removed successfully from {}.'.format(each_occupant.person_name, room_name)
+
+              for room in self.rooms['living_spaces']:
+                  for room_name, occupants in self.rooms['living_spaces'].items():
+                      for each_occupant in occupants:
+                          if name == each_occupant.person_name:
+                              self.rooms['living_spaces'][room_name].remove(each_occupant)
+
+                              return '{} was removed successfully from {}.'.format(each_occupant.person_name, room_name)
+
+            else:
+              return '{} is not a string!'.format(name)
