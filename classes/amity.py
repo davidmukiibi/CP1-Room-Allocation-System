@@ -303,3 +303,30 @@ class Amity(object):
 
             else:
               return '{} is not a string!'.format(name)
+
+
+
+
+    def remove_room(self, room_name):
+      if isinstance(room_name, str):
+          if room_name in self.rooms['offices'].keys():
+              if self.rooms['offices'][room_name]:
+                  return '{} can not be deleted because it is not emoty.'.format(room_name)
+
+              else:
+                  del self.rooms['offices'][room_name]
+                  return '{} was removed successfully!'.format(room_name)
+
+          elif room_name in self.rooms['living_spaces'].keys():
+              if self.rooms['living_spaces'][room_name]:
+                  return '{} can not be deleted because it is not emoty.'.format(room_name)
+
+              else:
+                  del self.rooms['living_spaces'][room_name]
+                  return '{} was removed successfully!'.format(room_name)
+
+          else:
+              return 'You are trying to delete room: {} that doesnt exist.'.format(room_name)
+
+      else:
+          return '{} entered is not a string.'.format(room_name)
