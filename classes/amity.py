@@ -241,14 +241,13 @@ class Amity(object):
 
 
     def load_people(self, filename):
-      """ This method adds people to rooms from a txt file. """
-      docpath = os.path.dirname(__file__)
-      filepath = os.path.join(docpath, filename + ".txt")
-      print filepath
-      if not os.path.isfile(filepath):
+        """ This method adds people to rooms from a txt file. """
+        docpath = os.path.dirname(__file__)
+        filepath = os.path.join(docpath, filename + ".txt")
+        if not os.path.isfile(filepath):
           return "{} is not a valid file path.".format(filepath)
 
-      with open(filepath, 'r') as f:
+        with open(filepath, 'r') as f:
           for each_line in f:
               words_list = each_line.split()
               first_name = words_list[0]
@@ -260,4 +259,20 @@ class Amity(object):
               else:
                   lspace_option = words_list[3]
               self.add_person(first_name, second_name, person_type, lspace_option)
-      return "People were loaded successfully!"
+        return "People were loaded successfully!"
+
+
+      def load_rooms(self, filename):
+          """Emthod loads rooms from a text file"""
+          docpath = os.path.dirname(__file__)
+          filepath = os.path.join(docpath, filename + ".txt")
+          if not os.path.isfile(filepath):
+              return "{} is not a valid file path or file doesnt exist or wrong file name.".format(filepath)
+          with open(filepath, 'r') as f:
+              for each_line in f:
+                  words_list = each_line.split()
+                  room_name = words_list[0]
+                  room_type = words_list[1]
+
+                  self.create_room(room_name, room_type)
+                  return "Rooms were created successfully!"
