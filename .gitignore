@@ -1,3 +1,6 @@
-*.DS_Store
-*.db
-*.pyc
+.DS_Store
+tests/.DS_Store
+tests/.pyc
+classes/.db
+classes/.pyc
+classes/.vscode/
