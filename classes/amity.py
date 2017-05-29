@@ -3,6 +3,9 @@ import os
 sys.path.append(os.path.abspath("/Users/davidmukiibi/Desktop/Room-allocation/classes"))
 from room import Room, Office, LivingSpace
 from person import Staff, Fellow
+from database_tables import Base, Room, Person, DatabaseCreator
+from sqlalchemy import create_engine, ForeignKey
+from sqlalchemy.orm import sessionmaker
 
 
 class Amity(object):
@@ -20,12 +23,12 @@ class Amity(object):
         if isinstance(room_name, str) and isinstance(room_type, str):
             if room_type.lower() == 'o':
                 office = Office(room_name=room_name, room_type='o')
-                self.rooms['offices'].update({office.room_name: office.office_occupants})
+                self.rooms['offices'].update({office.room_name: office.occupants})
                 print '{} office created successfully.'.format(office.room_name)
 
             elif room_type.lower() == 'l':
                 lspace = LivingSpace(room_name=room_name, room_type='l')
-                self.rooms['living_spaces'].update({lspace.room_name: lspace.living_space_occupants
+                self.rooms['living_spaces'].update({lspace.room_name: lspace.occupants
                                                    })
                 print '{} living space created successfully.'.format(lspace.room_name)
 
@@ -33,7 +36,7 @@ class Amity(object):
                 print '{} wrong room type entered.'.format(room_type)
 
         else:
-            print 'Either {} or {} is not a string, please check and try again!'.format(room_name,
+            return 'Either {} or {} is not a string, please check and try again!'.format(room_name,
                                                                                         room_type)
 
 
@@ -53,6 +56,7 @@ class Amity(object):
                     for an_office, occupants in self.rooms['offices'].items():
                         if len(occupants) < 5:
                             self.rooms['offices'][an_office].append(staff)
+                            staff.allocated_office = an_office
                             # import ipdb; ipdb.set_trace()
                             return '{} was added successfully to office: {}.'.\
                                         format(staff.person_name, an_office)
@@ -66,6 +70,7 @@ class Amity(object):
                     for an_office, occupants in self.rooms['offices'].items():
                         if len(occupants) < 5:
                             self.rooms['offices'][an_office].append(fellow)
+                            fellow.allocated_office = an_office
                             return '{} was added successfully to office: {}'.\
                                         format(fellow.person_name, an_office)
                         else:
@@ -80,6 +85,7 @@ class Amity(object):
                     for an_office, occupants in self.rooms['offices'].items():
                         if len(occupants) < 5:
                             self.rooms['offices'][an_office].append(fellow)
+                            fellow.allocated_office = an_office
                             print 'Fellow has been added successfully to office: {}'.\
                                                                         format(an_office)
                             if self.rooms['living_spaces']:
@@ -87,13 +93,14 @@ class Amity(object):
                                                                     items():
                                     if len(ls_occupants) < 7:
                                         self.rooms['living_spaces'][a_living_space].append(fellow)
+                                        fellow.allocated_living_space = a_living_space
                                         return 'Fellow added successfully to living space: '\
                                                                     '{}'.format(a_living_space)
                                     else:
                                         self.rooms['unallocated']['living_space'].append(fellow)
-                                        return 'no living spaces available right now!'
+                                        return 'No living spaces available right now!'
                             else:
-                                return 'no living spaces at the moment'
+                                return 'No living spaces at the moment'
                         else:
                             print 'No offices available at the time'
                             self.rooms['unallocated']['office'].append(fellow)
@@ -102,11 +109,12 @@ class Amity(object):
                                                                     items():
                                     if len(ls_occupants) < 7:
                                         self.rooms['living_spaces'][a_living_space].append(fellow)
+                                        fellow.allocated_living_space = a_living_space
                                         return 'Fellow has been added successfully to living space'\
                                                                     '{}'.format(a_living_space)
                                     else:
                                         self.rooms['unallocated']['living_space'].append(fellow)
-                                        return 'no living spaces available right now!'
+                                        return 'No living spaces available right now!'
                 else:
                     self.rooms['unallocated']['offices'].append(fellow)
                     print 'No offices available at the time'
@@ -115,16 +123,17 @@ class Amity(object):
                                                             items():
                             if len(ls_occupants) < 7:
                                 self.rooms['living_spaces'][a_living_space].append(fellow)
+                                fellow.allocated_living_space = a_living_space
                                 return 'Fellow has been added successfully to living space'\
                                                             '{}'.format(a_living_space)
                             else:
                                 self.rooms['unallocated']['living_space'].append(fellow)
-                                return 'no living spaces available right now!'
+                                return 'No living spaces available right now!'
 
             else:
-                return 'you entered some wrong value, cross check and try again!'
+                return 'You entered some wrong value, cross check and try again!'
         else:
-            return 'please check the values you entered, all must be letters.'
+            return 'Please check the values you entered, all must be letters.'
 
 
     def print_unallocated_people(self):
@@ -352,20 +361,140 @@ class Amity(object):
                 else:
                     print '{} is empty at the moment!'.format(each_room)
 
-        # else:
-        #     # create file with the given filename and write res to it
-        #     txt_file = open(filename + ".txt", "w+")
-        #     txt_file.write(response)
-        #     txt_file.close()
-        #     return msg
-        """this is on hold"""
+        else:
+            print 'still a work in progress, check back later.'
+            # Creating the file with the given filename and writing to it and saving it.
+            # print "Saving output data to file..."
+            # what_to_write = (
+            # ("\n\nLIST OF EACH LIVING SPACE, OFFICE AND IT'S OCCUPANTS\n" +
+            #              "*" * 50 + "\n")
+            #     for lspace in self.rooms['living_spaces'].keys():
+            #         lspace.room_name.upper() + "\n" + ("*" * 50 + "\n")
+            #     people = [person.person_name for person in self.rooms['living_spaces'][lspace]]
+            #     ", ".join(people) + "\n\n\n\n"
+
+            #     for office in self.rooms['offices'].keys():
+            #         office.room_name.upper() + "\n" + ("*" * 50 + "\n")
+            #     office_people = [office_person.person_name for office_person in self.rooms['offices'][office]]
+            #     ", ".join(office_people) + "\n\n\n\n"
+
+            # text_file = open(filename + ".txt", "w+")
+            # text_file.write(what_to_write)
+            # text_file.close()
+            # return '{}.text saved successfully to the computer.'.format(filename)
+
+    def save_state(self, database_name=None):
+        """ Method that saves all the data in the application into a given database """
+
+        all_rooms_in_amity = self.rooms['offices'].keys() + self.rooms['living_spaces'].keys()
+        all_people = []
+
+        for room in self.rooms['offices'].keys():
+            if self.rooms['offices'].values():
+                capacity = len(self.rooms['offices'][room])
+                for person in self.rooms['offices'][room]:
+                    all_people.append(person)
+        
+        for another_room in self.rooms['living_spaces'].keys():
+            if self.rooms['living_spaces'].values():
+                capacity = len(self.rooms['living_spaces'][another_room])
+                for persona in self.rooms['living_spaces'][another_room]:
+                    all_people.append(persona)
+
+        for unallocated_Room in self.rooms['unallocated'].keys():
+            if self.rooms['unallocated'].values():
+                capacity = len(self.rooms['unallocated'][unallocated_Room])
+                for person in self.rooms['unallocated'][unallocated_Room]:
+                    all_people.append(person)
+
+        if not database_name:
+            database = DatabaseCreator("amity")
+        else:
+            database = DatabaseCreator(database_name)
+
+        Base.metadata.bind = database.engine
+        database_session = database.session()
+        database_session.query(Person).delete()
+        database_session.query(Room).delete()
+
+        for a_room in all_rooms_in_amity:
+            if a_room in self.rooms['offices'].keys():
+                saved_room = Room(
+                    r_name=a_room,
+                    r_type='o',
+                    capacity=len(self.rooms['offices'][a_room]))
+
+            else:
+                saved_room = Room(
+                    r_name=a_room,
+                    r_type='l',
+                    capacity=len(self.rooms['living_spaces'][a_room]))
+
+            database_session.add(saved_room)
+
+        for a_person in all_people:
+            saved_person = Person(
+                first_name=a_person.first_name,
+                second_name=a_person.second_name,
+                person_type=a_person.person_type,
+                office_space=a_person.allocated_office,
+                living_space=a_person.allocated_living_space,
+                lspace_option=a_person.lspace_option)
+
+            database_session.add(saved_person)
+
+        database_session.commit()
+        return "State Successfully Saved"
 
 
-    def save_state(self):
-      pass
 
-    def load_state(self):
-      pass
+    
+    def load_state(self, database_name=None):
+        """ Method that loads the saved application state from the database """
+
+        engine = create_engine("sqlite:///" + database_name + ".db")
+        Session = sessionmaker()
+        Session.configure(bind=engine)
+        session = Session()
+
+        try:
+            people = session.query(Person).all()
+            the_rooms = session.query(Room).all()
+
+        except:
+            return "Sorry wrong database format"
+
+
+        for each_room in the_rooms:
+            if each_room.r_type == "o":
+                office = Office(each_room.r_name, each_room.r_type)  # create new office
+                self.rooms['offices'].update({each_room.r_name: office.room_name})  # add to list of offices
+
+            if each_room.r_type == 'l':
+                lspace = LivingSpace(each_room.r_name, each_room.r_type)
+                self.rooms['living_spaces'].update({each_room.r_name: lspace.room_name})
+
+
+        for each_person in people:
+            if each_person.person_type == "STAFF":
+                staff = Staff(each_person.first_name, each_person.second_name, each_person.person_type, each_person.lspace_option)
+                if each_person.office_space is not None:
+                    self.rooms['offices'].update({each_person.office_space: staff})
+                else:
+                    self.rooms['unalloctaed'].update({'office': staff})
+
+            else:
+                fellow = Fellow(each_person.first_name, each_person.second_name, each_person.person_type, each_person.lspace_option)
+                if each_person.office_space is not None:
+                    self.rooms['offices'].update({each_person.office_space: fellow})
+                else:
+                    self.rooms['unallocated'].update({'office': fellow})
+                if each_person.lspace_option == 'Y':
+                    self.rooms['living_spaces'].update({each_person.living_space: fellow})
+                if (each_person.living_space) is None and (each_person.lspace_option == 'Y'):
+                    self.rooms['unallocated'].update({'living_space': fellow})
+
+        return "Data loaded successfully!"
 
 
 amity = Amity()
@@ -391,17 +520,19 @@ print amity.add_person('david', 'scott', 'STAFF', 'N')
 # print amity.reallocate('david mukiibi', 'mord')
 # print amity.display_people_in_room('oculus')
 # print amity.display_people_in_room('mordor')
-# print amity.load_people('sample_output')
+print amity.load_people('sample_people_input')
 # print amity.all_the_people_in_all_offices()
 # print amity.all_people_in_all_living_spaces()
 # print amity.print_unallocated_people()
 print amity.load_rooms('sample_rooms_input')
 # print amity.display_people_in_room('narnia')
 # print amity.remove_person('david mukiibi')
-print amity.display_people_in_room('narnia')
+print amity.display_people_in_room('oculus')
 # print amity.all_the_rooms_in_amity()
 # #print amity.display_people_in_room('oculus')
 #print amity.remove_room('narnia')
 print amity.all_the_rooms_in_amity()
 print amity.all_people_in_all_living_spaces()
-# amity.print_allocations()
+print amity.print_allocations()
+print amity.save_state('new_amity')
+print amity.load_state('new_amity')

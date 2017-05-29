@@ -9,6 +9,8 @@ class Person(object):
         self.person_name = '{} {}'.format(self.first_name, self.second_name)
         self.person_type = person_type
         self.lspace_option = lspace_option
+        self.allocated_office = None
+        self.allocated_living_space = None
 
 
 
