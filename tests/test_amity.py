@@ -81,6 +81,8 @@ class AmityTests(unittest.TestCase):
     
 
     def test_printing_unallocated_people_works(self):
+        """test that printing unallocated people works"""
+
         self.amity.print_unallocated_people()
         self.amity.create_room('hogwarts', 'o')
         self.amity.create_room('mordor', 'l')
