@@ -217,49 +217,7 @@ class Amity(object):
             return '{} is not a string!'.format(room_name)
 
 
-    # def reallocate(self, person_name, new_room_name):
-    #     """method re-allocates a person from one room to another"""
-
-    #     if isinstance(person_name, str) and isinstance(new_room_name, str):
-    #         if new_room_name in self.rooms['offices'].keys():
-    #             for room in self.rooms['offices'].keys():
-    #                 for person in self.rooms['offices'][room]:
-    #                     if person_name == person.person_name:
-    #                         # if room == new_room_name:
-    #                         return '{} is already in {}'.format(person_name,
-    #                                                                 new_room_name)
-    #                     else:
-    #                         self.rooms['offices'][new_room_name].append(person)
-    #                         self.rooms['offices'][room].remove(person)
-    #                         return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
-
-    #         elif new_room_name in self.rooms['living_spaces'].keys():
-    #             for room in self.rooms['living_spaces'].keys():
-    #                 # if new_room_name in self.rooms['living_spaces'].keys():
-    #                     # for room in self.rooms['living_spaces'].keys():
-    #                 if person_name not in self.rooms['living_spaces'][room]:
-    #                     return '{} is not a fellow or is not eligible for a living space'.format(person_name)
-    #                 # for person in self.rooms['living_spaces'][room]:
-    #                 #     if person.person_type == 'STAFF':
-    #                 #         print 'Person you are trying to reallocate {} to a living space and is not a fellow.'.format(person.person_name)
-    #                     # elif person.lspace_option == 'N':
-    #                     #     print 'Fellow is not legible for a living space.'
-    #                 else:
-                        
-    #                     if person_name == person.person_name:
-    #                         if room == new_room_name:
-    #                             return '{} is already in {}'.format(person_name,
-    #                                                                 new_room_name)
-    #                         else:
-    #                             self.rooms['living_spaces'][new_room_name].append(person)
-    #                             self.rooms['living_spaces'][room].remove(person)
-    #                             return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
-
-    #         else:
-    #             return 'oops {} does not exist in amity!'.format(new_room_name)
-    #     else:
-    #         return 'Either {} or {} is not a string!'.format(person_name, new_room_name)
-
+    
 
     def load_people(self, filename):
         """ This method adds people to rooms from a txt file. """
@@ -461,7 +419,7 @@ class Amity(object):
 
 
     
-    def load_state(self, database_name=None):
+    def load_state(self, database_name):
         """ Method that loads the saved application state from the database """
 
         engine = create_engine("sqlite:///" + database_name + ".db")
@@ -474,7 +432,7 @@ class Amity(object):
             the_rooms = new_session.query(Room).all()
 
         except:
-            return "Sorry! Database does not exist or is empty"
+            return "Sorry! You either havent specified a Database or the Database does not exist or is empty."
 
 
         for each_room in the_rooms:
@@ -513,44 +471,58 @@ class Amity(object):
         return "Data loaded successfully!"
 
 
-# amity = Amity()
-# amity.create_room('narnia', 'o')
-# amity.create_room('hogwarts', 'o')
-# amity.create_room('mordor', 'l')
-# amity.create_room('oculus', 'l')
-# print amity.add_person('david', 'mukiibi', 'FELLOW', 'Y')
-# print amity.add_person('david', 'scott', 'STAFF', 'N')
-# # #print amity.print_unallocated_people()
-# # #print amity.all_the_rooms_in_amity()
-# # # print amity.reallocate('david mukiibi', 'hogwarts')
-# # # print amity.display_people_in_room('hogwarts')
-# # #print amity.display_people_in_room('narnia')
-# # #print amity.display_people_in_room('mordor')
-# # # amity.all_the_rooms_in_amity()
-# # #amity.print_allocations()
-# # # print amity.reallocate('david scott', 'hogwarts')
-# # print amity.reallocate('david scott', 'hogwarts')
-# print amity.display_people_in_room('hogwarts')
-# # # print amity.display_people_in_room('narnia')
-# # # print amity.display_people_in_room('oculus')
-# print amity.reallocate('david mukiibi', 'narnia')
-# # # print amity.display_people_in_room('oculus')
-# # # print amity.display_people_in_room('mordor')
-#print amity.load_rooms('sample_rooms_input')
-#print amity.load_people('sample_people_input')
-# # # print amity.all_the_people_in_all_offices()
-# # # print amity.all_people_in_all_living_spaces()
-# # # print amity.print_unallocated_people()
+    def empty_rooms(self):
+        """Lists all the empty rooms in amity"""
 
-# # # print amity.display_people_in_room('narnia')
-# # # print amity.remove_person('david mukiibi')
-# # print amity.display_people_in_room('oculus')
-# # # print amity.all_the_rooms_in_amity()
-#print amity.display_people_in_room('narnia')
-# # #print amity.remove_room('narnia')
-# # print amity.all_the_rooms_in_amity()
-# # print amity.all_people_in_all_living_spaces()
-# # print amity.print_allocations()
-#print amity.save_state('estonia')
-# print amity.load_state('estonia')
-# print amity.all_the_rooms_in_amity()
+        all_of_the_rooms = []
+        for office in self.rooms['offices'].keys():
+            if not self.rooms['offices'][office]:
+                all_of_the_rooms.append(office)
+        for lspace in self.rooms['living_spaces'].keys():
+            if not self.rooms['living_spaces'][lspace]:
+                all_of_the_rooms.append(lspace)
+
+        return all_of_the_rooms
+
+    # def reallocate(self, persons_name, new_room_name):
+    #     """method re-allocates a person from one room to another"""
+
+    #     if isinstance(persons_name, str) and isinstance(new_room_name, str):
+    #         if new_room_name in self.rooms['offices'].keys():
+    #             for room in self.rooms['offices'].keys():
+    #                 for person in self.rooms['offices'][room]:
+    #                     if person.person_name == persons_name:
+    #                         if room == new_room_name:
+    #                             return '{} is already in {}'.format(person_name,
+    #                                                                 new_room_name)
+    #                         else:
+    #                             self.rooms['offices'][new_room_name].append(person)
+    #                             self.rooms['offices'][room].remove(person)
+    #                             print 'Reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
+
+    #         elif new_room_name in self.rooms['living_spaces'].keys():
+    #             for room in self.rooms['living_spaces'].keys():
+    #                 for person in self.rooms['living_spaces'][room]:
+    #                     if person.person_type == 'Fellow':
+    #                     if person_name in self.rooms['living_spaces'][room]:
+    #                     return '{} is not a fellow or is not eligible for a living space'.format(person_name)
+    #                 # for person in self.rooms['living_spaces'][room]:
+    #                 #     if person.person_type == 'STAFF':
+    #                 #         print 'Person you are trying to reallocate {} to a living space and is not a fellow.'.format(person.person_name)
+    #                     # elif person.lspace_option == 'N':
+    #                     #     print 'Fellow is not legible for a living space.'
+    #                 else:         
+    #                     if person_name == person.person_name:
+    #                         if room == new_room_name:
+    #                             return '{} is already in {}'.format(person_name,
+    #                                                                 new_room_name)
+    #                         else:
+    #                             self.rooms['living_spaces'][new_room_name].append(person)
+    #                             self.rooms['living_spaces'][room].remove(person)
+    #                             return 'reallocation of {} successful from {}, to {}'.format(person.person_name, room, new_room_name)
+
+    #         else:
+    #             return 'oops {} does not exist in amity!'.format(new_room_name)
+    #     else:
+    #         return 'Either {} or {} is not a string!'.format(person_name, new_room_name)
+
