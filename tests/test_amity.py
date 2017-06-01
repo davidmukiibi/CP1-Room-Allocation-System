@@ -16,6 +16,8 @@ class AmityTests(unittest.TestCase):
         self.amity = Amity()
 
     def tearDown(self):
+        """this cleans up the residual objects of amity after every test is run."""
+
         del self.amity
 
     def test_room_created_successfully(self):
@@ -155,7 +157,6 @@ class AmityTests(unittest.TestCase):
         self.assertIn('mordor', self.amity.rooms['living_spaces'].keys())
 
     def test_save_state_with_db_name_and_data_in_application(self):
-        
         """tests that data is supplied from the application to the database and saved"""
 
         self.amity.create_room('narnia', 'o')
@@ -167,6 +168,14 @@ class AmityTests(unittest.TestCase):
         self.amity.save_state('kenya')
         self.assertTrue('david mukiibi' == self.amity.rooms['offices']['narnia'][0].person_name)
         self.assertTrue('State Successfully Saved!' in self.amity.save_state('kenya'))
+
+    def test_empty_rooms(self):
+        """ print all empty rooms in amity"""
+
+        self.amity.load_rooms('sample_rooms_input')
+        self.amity.load_people('sample_people_input')
+        self.assertTrue('MEXICO' in self.amity.empty_rooms())
+        self.assertTrue('JINJA' in self.amity.empty_rooms())
 
 if __name__ == '__main__':
     unittest.main()
