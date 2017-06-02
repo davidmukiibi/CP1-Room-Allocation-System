@@ -1,6 +1,13 @@
+classes/database_tables.pyc
 .DS_Store
 tests/.DS_Store
 tests/.pyc
 classes/.db
 classes/.pyc
 classes/.vscode/
+*.db
+*.pyc
+classes/.DS_Store
+classes/new_amity.db
+classes/person.pyc
+classes/room.pyc
