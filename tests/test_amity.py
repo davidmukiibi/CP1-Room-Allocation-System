@@ -174,7 +174,8 @@ class AmityTests(unittest.TestCase):
 
         self.amity.load_rooms('sample_rooms_input')
         self.amity.load_people('sample_people_input')
-        self.assertTrue('MEXICO' in self.amity.empty_rooms())
+        
+        self.assertTrue('GULU' in self.amity.empty_rooms())
         self.assertTrue('JINJA' in self.amity.empty_rooms())
 
 if __name__ == '__main__':
