@@ -16,19 +16,19 @@ Command	| Argument | Example
 --- | --- | ---
 create_room	| l or o | create_room narnia o
 add_person	| (first_name) (last_name) (person_type) (living_space_option)	| add_person david mukiibi FELLOW Y
-load_people_from | (filename) | load_people_from sample_people_input.txt
-load_rooms_from	| (filename) | load_rooms_from sample_rooms_input.txt
-print_allocations | [--o=filename] | print_allocations --o=allocated
 display_people_in | (room_name) | display_people_in narnia
 display_people_in_ls | | display_people_in_ls
 display_people_in_offices | | display_people_in_offices
-print_unallocated | | print_unallocated
 display_all_rooms | | display_all_rooms
-delete_person | (person_name) | delete_person david
-delete_room | (room_name) | delete_room narnia
+print_allocations | [--o=filename] | print_allocations --o=allocated
+print_unallocated | | print_unallocated
 empty_rooms | | empty_rooms
+load_people_from | (filename) | load_people_from sample_people_input.txt
+load_rooms_from	| (filename) | load_rooms_from sample_rooms_input.txt
 save_state | [--db=sqlite_database] | save_state --db=nairobi
 load_state_from | (database_name) | load_state_from nairobi
+delete_person | (person_name) | delete_person david
+delete_room | (room_name) | delete_room narnia
 
 #2. Installation and set up.
 
