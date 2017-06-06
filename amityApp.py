@@ -9,7 +9,6 @@ Usage:
     Amity display_people_in <room_name>
     Amity load_people_from <filename>
     Amity load_rooms_from <filename>
-    Amity load_rooms_from <filename>
     Amity delete_person <person_name>
     Amity delete_room <room_name>
     Amity load_state_from <database_name>
