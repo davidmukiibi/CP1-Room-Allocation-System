@@ -6,9 +6,9 @@
 
 >Amity Room Allocation System.
 
-The application built here is one that assigns rooms to people in Amity.
-The people can be either Fellows or Staff.
-The rooms can either be living spaces or offices.
+    >The application built here is one that assigns rooms to people in Amity.
+    >The people can be either Fellows or Staff.
+    >The rooms can either be living spaces or offices.
 
 #1. Commands.
 
