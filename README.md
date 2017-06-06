@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/davidmukiibi/CP1-Room-Allocation-System.svg?branch=develop)](https://travis-ci.org/davidmukiibi/CP1-Room-Allocation-System)
 [![Coverage Status](https://coveralls.io/repos/github/davidmukiibi/CP1-Room-Allocation-System/badge.svg?branch=master)](https://coveralls.io/github/davidmukiibi/CP1-Room-Allocation-System?branch=master)
 
-Amity Room Allocation System.
+>Amity Room Allocation System.
 
 The application built here is one that assigns rooms to people in Amity.
 The people can be either Fellows or Staff.
