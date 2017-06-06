@@ -13,6 +13,7 @@ The rooms can either be living spaces or offices.
 #1. Commands.
 
 Command	| Argument | Example
+--- | --- | ---
 create_room	| l or o | create_room narnia o
 add_person	| (first_name) (last_name) (person_type) (living_space_option)	| add_person david mukiibi FELLOW Y
 load_people_from | (filename) | load_people_from sample_people_input.txt
