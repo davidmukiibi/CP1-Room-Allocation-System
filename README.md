@@ -32,15 +32,15 @@ load_state_from | (database_name) | load_state_from nairobi
 
 #2. Installation and set up.
 
-First, clone this repository to your computer. copy this link `git clone https://github.com/davidmukiibi/CP1-Amity-Room-Allocation-System.git' and paste it into your computer's command prompt or terminal.
+First, clone this repository to your computer. copy this link `git clone https://github.com/davidmukiibi/CP1-Amity-Room-Allocation-System.git` and paste it into your computer's command prompt or terminal.
 
-Create a virtual environment or virtualenv on your machine and install the dependencies via pip install -r requirements.txt and activate it, 
+Create a virtual environment or virtualenv on your machine and install the dependencies via `pip install -r requirements.txt` and activate it, 
 all this should be done in the terminal or command prompt of your computer.
 
 Follow the link below to set up your virtual environment, activate it and install the application dependencies.
-http://sourabhbajaj.com/mac-setup/Python/virtualenv.html
+`http://sourabhbajaj.com/mac-setup/Python/virtualenv.html`
 
-Traverse your way into the folder that you cloned the application into until you reach the folder that has "amityApp.py" file while in your terminal and run the command "python amityApp.py -i".
+Traverse your way into the folder that you cloned the application into until you reach the folder that has `amityApp.py` file while in your terminal and run the command `python amityApp.py -i`.
 
 #5. Usage
 
@@ -50,8 +50,8 @@ There after you can play around with other commands as shown above as you wish.
 
 Credits
 
-David Mukiibi in specific.
+`David Mukiibi` in specific.
 
 and
 
-Andela at large.
+`Andela` at large.
