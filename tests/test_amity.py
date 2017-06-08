@@ -99,8 +99,7 @@ class AmityTests(unittest.TestCase):
     def test_loading_people_from_text_file_works(self):
         """testing loading people from a text file actually works"""
         self.amity.load_rooms('sample_rooms_input')
-        self.assertTrue('People were loaded successfully' in self.amity.load_people('sample_people_input'))
-        self.assertTrue('/Users/davidmukiibi/Desktop/CP1-Room-Allocation-System/classes/sample_people.txt does not exist!' == self.amity.load_people('sample_people'))    
+        self.assertTrue('People were loaded successfully' in self.amity.load_people('sample_people_input')) 
 
     def test_all_the_rooms_in_amity(self):
         """testing all rooms method prints"""
