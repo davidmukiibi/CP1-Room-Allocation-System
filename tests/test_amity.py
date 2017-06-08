@@ -174,11 +174,11 @@ class AmityTests(unittest.TestCase):
 
     def test_removing_room(self):
         """testing that removing an empty room works"""
-       self.amity.create_room('jamaica', 'l')
-       self.amity.create_room('mordor', 'o')
-       self.assertTrue('jamaica was removed successfully!' == self.amity.remove_room('jamaica'))
-       self.assertTrue('mordor was removed successfully!' == self.amity.remove_room('mordor'))
-       self.assertTrue('You are trying to delete room: uganja that doesnt exist.' == self.amity.remove_room('uganja'))
+        self.amity.create_room('jamaica', 'l')
+        self.amity.create_room('mordor', 'o')
+        self.assertTrue('jamaica was removed successfully!' == self.amity.remove_room('jamaica'))
+        self.assertTrue('mordor was removed successfully!' == self.amity.remove_room('mordor'))
+        self.assertTrue('You are trying to delete room: uganja that doesnt exist.' == self.amity.remove_room('uganja'))
 
 if __name__ == '__main__':
     unittest.main()
