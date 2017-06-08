@@ -72,25 +72,19 @@ class AmityRoomAllocation(cmd.Cmd):
 
     font = Figlet(font = 'lean')
 
-    print (Fore.CYAN + font.renderText('AMITY #TIA'))
+    print (Fore.GREEN + font.renderText('AMITY #TIA'))
     prompt = 'AmityRoomAllocation: '
 
     @docopt_cmd
     def do_create_room(self, arg):
-        """Usage: create_room <room_name> <room_type>
-        
-        """
-
+        """Usage: create_room <room_name> <room_type>"""
         name = arg["<room_name>"]
         r_type = arg["<room_type>"]
         print amity.create_room(name, r_type)
 
     @docopt_cmd
     def do_add_person(self, arg):
-        """Usage: add_person <first_name> <second_name> <person_type> <living_space_option>
-        
-        """
-
+        """Usage: add_person <first_name> <second_name> <person_type> <living_space_option>"""
         first_name = arg["<first_name>"]
         second_name = arg["<second_name>"]
         person_type = arg["<person_type>"]
@@ -99,128 +93,94 @@ class AmityRoomAllocation(cmd.Cmd):
 
     @docopt_cmd
     def do_print_unallocated(self, arg):
-        """Usage: print_unallocated
-        
-        """
-
-        amity.print_unallocated_people()
+        """Usage: print_unallocated"""
+        print amity.print_unallocated_people()
 
     @docopt_cmd
     def do_display_all_rooms(self, arg):
-        """Usage: display_all_rooms
-        
-        """
-
+        """Usage: display_all_rooms"""
         print amity.all_the_rooms_in_amity()
 
     @docopt_cmd
     def do_display_people_in_offices(self, arg):
-        """Usage: display_people_in_offices
-        
-        """
-
-        amity.all_the_people_in_all_offices()
+        """Usage: display_people_in_offices"""
+        print amity.all_the_people_in_all_offices()
 
     @docopt_cmd
     def do_display_people_in_ls(self, arg):
-        """Usage: display_people_in_ls
-        
-        """
-
-        amity.all_people_in_all_living_spaces()
+        """Usage: display_people_in_ls"""
+        print amity.all_people_in_all_living_spaces()
 
     @docopt_cmd
     def do_display_people_in(self, arg):
-        """Usage: display_people_in <room_name>
-        
-        """
-
+        """Usage: display_people_in <room_name>"""
         room_name = arg["<room_name>"]
         print amity.display_people_in_room(room_name)
 
     @docopt_cmd
     def do_load_people_from(self, arg):
-        """Usage: load_people_from <filename>
-        
-        """
-
+        """Usage: load_people_from <filename>"""
         filename = arg["<filename>"]
         print amity.load_people(filename)
 
     @docopt_cmd
     def do_load_rooms_from(self, arg):
-        """Usage: load_rooms_from <filename>
-        
-        """
-
+        """Usage: load_rooms_from <filename>"""
         filename = arg["<filename>"]
         print amity.load_rooms(filename)
 
     @docopt_cmd
     def do_delete_person(self, arg):
-        """Usage: delete_person <person_name>
-        
-        """
-
+        """Usage: delete_person <person_name> """
         person_name = arg["<person_name>"]
         print amity.remove_person(person_name)
 
     @docopt_cmd
     def do_delete_room(self, arg):
-        """Usage: delete_room <room_name>
-        
-        """
-
+        """Usage: delete_room <room_name>"""
         room_name = arg["<room_name>"]
         print amity.remove_room(room_name)
 
     @docopt_cmd
     def do_load_state_from(self, arg):
-        """Usage: load_state_from <database_name>
-        
-        """
-
+        """Usage: load_state_from <database_name>"""
         database_name = arg["<database_name>"]
         print amity.load_state(database_name)
 
     @docopt_cmd
     def do_empty_rooms(self, arg):
-        """Usage: empty_rooms
-        
-        """
+        """Usage: empty_rooms"""
         print amity.empty_rooms()
 
     @docopt_cmd
     def do_print_allocations(self, arg):
         """Usage: print_allocations [--o=filename]"""
-
         filename = arg["--o"]
         if filename:
-            amity.print_allocations(filename)
+            print amity.print_allocations(filename)
         else:
-            amity.print_allocations()
-
+            print amity.print_allocations()
 
     @docopt_cmd
     def do_save_state(self, arg):
         """Usage: save_state <database_name> """
-
-        database_name = arg["--db"]
+        database_name = arg["<database_name>"]
         if database_name:
             print amity.save_state(database_name)
         else:
             print amity.save_state()
 
-
     @docopt_cmd
     def do_reallocate(self, arg):
-        """Usage: reallocate <persons_name> <new_room_name> """
-
-        persons_name = arg["<persons_name>"]
+        """Usage: reallocate <first_name> <second_name> <new_room_name> """
+        first_name = arg['<first_name>']
+        second_name = arg['<second_name>']
+        persons_name = '{} {}'.format(first_name, second_name)
         new_room_name = arg["<new_room_name>"]
-        amity.reallocate(persons_name, new_room_name)
+        print amity.reallocate(first_name, second_name, new_room_name)
 
     def do_quit(self, arg):
+
         """Usage: quit
         
         """
@@ -230,7 +190,7 @@ class AmityRoomAllocation(cmd.Cmd):
         exit()
 
 
-#AmityRoomAllocation().cmdloop()
+
 
 opt = docopt(__doc__,sys.argv[1:])
 if opt["--interactive"]:
