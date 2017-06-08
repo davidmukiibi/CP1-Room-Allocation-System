@@ -6,10 +6,8 @@ from sqlalchemy.orm import relationship, backref, sessionmaker
 
 Base = declarative_base()
 
-
 class Room(Base):
     """creating the rooms table or in other terms,creating the Room model"""
-
     __tablename__ = 'Rooms'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -17,14 +15,10 @@ class Room(Base):
     r_type = Column(String(32), nullable=False)
     capacity = Column(Integer, nullable=False)
 
-    def __repr__(self):
-        return "<Room(r_name='{}')>".format(self.r_name)
-
 class Person(Base):
-    """creating the people table or in other terms,creating the Person model
-        """
+    """creating the people table or in other terms,creating the Person model"""
     __tablename__ = 'People'
-    # must every class have an id field?
+
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String(32), nullable=False)
     second_name = Column(String(32), nullable=False)
@@ -33,14 +27,9 @@ class Person(Base):
     living_space = Column(String(32), nullable=True)
     lspace_option = Column(String(32), nullable=True)
 
-    def __repr__(self):
-        return "<Person(person_name='{}')>".format(self.person_name)
-
-
 class DatabaseCreator(object):
     """creating a connection to the database and creating all the tables
     specified above"""
-
     def __init__(self, database_name=None):
         self.database_name = database_name
         if self.database_name:
@@ -50,5 +39,4 @@ class DatabaseCreator(object):
         self.engine = create_engine('sqlite:///' + self.database_name)
         self.session = sessionmaker()
         self.session.configure(bind=self.engine)
-
         Base.metadata.create_all(self.engine)
