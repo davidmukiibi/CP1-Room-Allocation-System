@@ -81,7 +81,7 @@ class AmityRoomAllocation(cmd.Cmd):
         room_names = arg["<room_names>"]
         for name in room_names:
             r_type = arg["<room_type>"]
-            print amity.create_room(r_type, name)
+            print amity.create_room(name, r_type)
 
     @docopt_cmd
     def do_add_person(self, arg):

@@ -14,7 +14,7 @@ class Amity(object):
         self.rooms = {'offices':{}, 'living_spaces':{}, 'unallocated':{'office': [],\
                                                                     'living_space': [],},}
     
-    def create_room(self, room_type, room_name):
+    def create_room(self, room_name, room_type):
         """this method creates a room, either an office or a living space
         and adds it to the respectives dictionary values"""
         if room_name.isalpha() and room_type.isalpha():
