@@ -34,7 +34,7 @@ delete_room | (room_name) | delete_room narnia
 
 First, clone this repository to your computer. copy this link `git clone https://github.com/davidmukiibi/CP1-Amity-Room-Allocation-System.git` and paste it into your computer's command prompt or terminal.
 
-Create a virtual environment or virtualenv on your machine and install the dependencies via `pip install -r requirements.txt` and activate it, 
+Create a virtual environment or virtualenv on your machine and install the dependencies via `pip install -r requirements.txt` and activate it,
 all this should be done in the terminal or command prompt of your computer.
 
 Follow the link below to set up your virtual environment, activate it and install the application dependencies.
@@ -43,6 +43,8 @@ Follow the link below to set up your virtual environment, activate it and instal
 Traverse your way into the folder that you cloned the application into until you reach the folder that has `amityApp.py` file while in your terminal and run the command `python amityApp.py -i`.
 
 #5. Usage
+
+[![asciicast](https://asciinema.org/a/4pfe9vfo3lwzroah28r1o6083.png)](https://asciinema.org/a/4pfe9vfo3lwzroah28r1o6083)
 
 Create rooms using the create_room command as shown above.
 Then create and add a person or people using the add_person command as shown above one person at a time.
