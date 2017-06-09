@@ -131,8 +131,10 @@ class AmityRoomAllocation(cmd.Cmd):
 
     @docopt_cmd
     def do_delete_person(self, arg):
-        """Usage: delete_person <person_name> """
-        person_name = arg["<person_name>"]
+        """Usage: delete_person <first_name> <second_name>"""
+        first_name = arg["<first_name"]
+        second_name = arg["<second_name>"]
+        person_name = '{} {}'.format(first_name, second_name)
         print amity.remove_person(person_name)
 
     @docopt_cmd

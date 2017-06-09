@@ -42,7 +42,7 @@ class Amity(object):
             chosen_room = random.choice(self.rooms['offices'].keys())
             chosen_ls = random.choice(self.rooms['living_spaces'].keys())
 
-            if person_type.upper() == 'STAFF' and staff.lspace_option.upper() == 'N':
+            if (person_type.upper() == 'STAFF') and (staff.lspace_option.upper() == 'N'):
                 if self.rooms['offices']: 
                     if len(self.rooms['offices'][chosen_room]) < 6:
                         self.rooms['offices'][chosen_room].append(staff)
@@ -54,7 +54,7 @@ class Amity(object):
                 else:
                     return 'No offices avalaible at the moment, contact facilities dept!'
 
-            elif person_type.upper() == 'FELLOW' and lspace_option.upper() == 'N':
+            elif (person_type.upper() == 'FELLOW') and (lspace_option.upper() == 'N'):
                 if self.rooms['offices']:
                     
                     if len(self.rooms['offices'][chosen_room]) < 6:
@@ -69,7 +69,7 @@ class Amity(object):
                     self.rooms['unallocated']['office'].append(fellow)
                     return 'No offices available at the time.'
 
-            elif person_type.upper() == 'FELLOW' and lspace_option.upper() == 'Y':
+            elif (person_type.upper() == 'FELLOW') and (lspace_option.upper() == 'Y'):
                 if self.rooms['offices']:
                     # for an_office, occupants in self.rooms['offices'].items():
                     if len(self.rooms['offices'][chosen_room]) < 6:
@@ -238,7 +238,7 @@ class Amity(object):
         return "Rooms were loaded successfully!"
 
     def remove_person(self, name):
-        """removes a person from amity"""
+        """removes a person from amity"""                
         if isinstance(name, str):
             for room in self.rooms['offices']:
                 for room_name, occupants in self.rooms['offices'].items():
@@ -247,6 +247,9 @@ class Amity(object):
                             self.rooms['offices'][room_name].remove(each_occupant)
                             return '{} was removed successfully from {}.'.\
                                                         format(each_occupant.person_name, room_name)
+                        else:
+                            return '{} does not exist in amity!'.format(name)
+
             for room in self.rooms['living_spaces']:
                 for room_name, occupants in self.rooms['living_spaces'].items():
                     for each_occupant in occupants:
@@ -254,6 +257,8 @@ class Amity(object):
                             self.rooms['living_spaces'][room_name].remove(each_occupant)
                             return '{} was removed successfully from {}.'.\
                                                         format(each_occupant.person_name, room_name)
+                        else:
+                            return '{} does not exist in amity!'.format(name)
         else:
             return '{} is not an alphabetical name!'.format(name)
 
@@ -287,14 +292,14 @@ class Amity(object):
                         for numbering, people in enumerate(room_occupants, 1):
                             print numbering, people.person_name
                     else:
-                        return '{} is empty at the moment!'.format(each_room)
+                        print '{} is empty at the moment!'.format(each_room)
                 for each_room, room_occupants in self.rooms['living_spaces'].items():
                     if room_occupants:
                         print '{}'.format(each_room)
                         for numbering, people in enumerate(room_occupants, 1):
                             print numbering, people.person_name
                     else:
-                        return '{} is empty at the moment!'.format(each_room)
+                        print '{} is empty at the moment!'.format(each_room)
             else:
                 return 'No one is allocated in offices at the moment.'
         else:
@@ -383,7 +388,7 @@ class Amity(object):
                 office_space=a_person.allocated_office,
                 living_space=a_person.allocated_living_space,
                 lspace_option=a_person.lspace_option)
-        database_session.add(saved_person)
+            database_session.add(saved_person)
         database_session.commit()
         return "State Successfully Saved!"
   
@@ -434,10 +439,10 @@ class Amity(object):
         all_of_the_rooms = []
         for office in self.rooms['offices'].keys():
             if not self.rooms['offices'][office]:
-                all_of_the_rooms.append(office)
+                all_of_the_rooms.append(str(office))
         for lspace in self.rooms['living_spaces'].keys():
             if not self.rooms['living_spaces'][lspace]:
-                all_of_the_rooms.append(lspace)
+                all_of_the_rooms.append(str(lspace))
         if all_of_the_rooms:
             return all_of_the_rooms
         else:
