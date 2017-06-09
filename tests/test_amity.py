@@ -94,7 +94,7 @@ class AmityTests(unittest.TestCase):
 
     def test_loading_rooms_from_text_file_that_doesnt_exist(self):
         """loading from a text file that doesnt exist should not be possible"""
-        self.assertIn('file doesnt exist or wrong file name', self.amity.load_rooms('taracha_rooms'))
+        self.assertIn('File doesnt exist or wrong file name', self.amity.load_rooms('taracha_rooms'))
 
     def test_loading_people_from_text_file_works(self):
         """testing loading people from a text file actually works"""
