@@ -46,8 +46,8 @@ Traverse your way into the folder that you cloned the application into until you
 
 [![asciicast](https://asciinema.org/a/4pfe9vfo3lwzroah28r1o6083.png)](https://asciinema.org/a/4pfe9vfo3lwzroah28r1o6083)
 
-Create rooms using the create_room command as shown above.
-Then create and add a person or people using the add_person command as shown above one person at a time.
+Create rooms using the `create_room` command as shown above.
+Then create and add a person or people using the `add_person` command as shown above one person at a time.
 There after you can play around with other commands as shown above as you wish.
 
 Credits
