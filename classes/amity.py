@@ -17,18 +17,23 @@ class Amity(object):
     def create_room(self, room_name, room_type):
         """this method creates a room, either an office or a living space
         and adds it to the respectives dictionary values"""
+        offices = self.rooms['offices'].keys()
+        living_spaces = self.rooms['living_spaces'].keys()
         if room_name.isalpha() and room_type.isalpha():
-            if room_type.lower() == 'o':
-                office = Office(room_name=room_name, room_type='o')
-                self.rooms['offices'].update({office.room_name: office.occupants})
-                return '{} office created successfully.'.format(office.room_name)
-            elif room_type.lower() == 'l':
-                lspace = LivingSpace(room_name=room_name, room_type='l')
-                self.rooms['living_spaces'].update({lspace.room_name: lspace.occupants
-                                                })
-                return '{} living space created successfully.'.format(lspace.room_name)
+            if (room_name in offices) or (room_name in living_spaces):
+                return '{} already exists!'.format(room_name)
             else:
-                return '{} wrong room type entered.'.format(room_type)
+                if room_type.lower() == 'o':
+                    office = Office(room_name=room_name, room_type='o')
+                    self.rooms['offices'].update({office.room_name: office.occupants})
+                    return '{} office created successfully.'.format(office.room_name)
+                elif room_type.lower() == 'l':
+                    lspace = LivingSpace(room_name=room_name, room_type='l')
+                    self.rooms['living_spaces'].update({lspace.room_name: lspace.occupants
+                                                    })
+                    return '{} living space created successfully.'.format(lspace.room_name)
+                else:
+                    return '{} wrong room type entered.'.format(room_type)
         else:
             return 'Either {} or {} is not a string, please check and try again!'.format(room_name,
                                                                                         room_type)
@@ -36,11 +41,21 @@ class Amity(object):
     def add_person(self, first_name, second_name, person_type, lspace_option):
         """this method adds a person to the system and assigns them an office and/or
         living space if they are eligible and/or if they with to opt for it."""
+
         if first_name.isalpha() and second_name.isalpha() and person_type.isalpha() and lspace_option.isalpha():
             fellow = Fellow(first_name, second_name, 'FELLOW', lspace_option)
             staff = Staff(first_name, second_name, 'STAFF', lspace_option)
             chosen_room = random.choice(self.rooms['offices'].keys())
             chosen_ls = random.choice(self.rooms['living_spaces'].keys())
+
+            for offices, people in self.rooms['offices'].items():
+                for person in people:
+                    if person.person_name == '{} {}'.format(first_name, second_name):
+                        return 'person already exists in amity.'
+            for living_spaces, people in self.rooms['living_spaces'].items():
+                for person in people:
+                    if person.person_name == '{} {}'.format(first_name, second_name):
+                        return 'person already exists in amity.'
 
             if (person_type.upper() == 'STAFF') and (staff.lspace_option.upper() == 'N'):
                 if self.rooms['offices']: 
@@ -206,7 +221,7 @@ class Amity(object):
         docpath = os.path.dirname(__file__)
         filepath = os.path.join(docpath, filename + ".txt")
         if not os.path.isfile(filepath):
-            return "{} does not exist!".format(filepath)
+            return "File doesnt exist or wrong file name."
 
         with open(filepath, 'r') as a_file:
             for each_line in a_file:
@@ -227,8 +242,7 @@ class Amity(object):
         docpath = os.path.dirname(__file__)
         filepath = os.path.join(docpath, filename + ".txt")
         if not os.path.isfile(filepath):
-            return "{} is not a valid file path or file doesnt exist or wrong file name.".\
-                                                                                format(filepath)
+            return "File doesnt exist or wrong file name."
         with open(filepath, 'r') as f:
             for each_line in f:
                 words_list = each_line.split()
