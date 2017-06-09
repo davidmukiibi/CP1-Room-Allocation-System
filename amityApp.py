@@ -1,6 +1,6 @@
 """
 Usage:
-    Amity create_room <room_name> <room_type>
+    Amity create_room <room_type> <room_names>...
     Amity add_person <first_name> <second_name> <person_type> <living_space_option>
     Amity print_unallocated
     Amity display_all_rooms
@@ -77,10 +77,11 @@ class AmityRoomAllocation(cmd.Cmd):
 
     @docopt_cmd
     def do_create_room(self, arg):
-        """Usage: create_room <room_name> <room_type>"""
-        name = arg["<room_name>"]
-        r_type = arg["<room_type>"]
-        print amity.create_room(name, r_type)
+        """Usage: create_room <room_type> <room_names>..."""
+        room_names = arg["<room_names>"]
+        for name in room_names:
+            r_type = arg["<room_type>"]
+            print amity.create_room(r_type, name)
 
     @docopt_cmd
     def do_add_person(self, arg):
@@ -132,7 +133,7 @@ class AmityRoomAllocation(cmd.Cmd):
     @docopt_cmd
     def do_delete_person(self, arg):
         """Usage: delete_person <first_name> <second_name>"""
-        first_name = arg["<first_name"]
+        first_name = arg["<first_name>"]
         second_name = arg["<second_name>"]
         person_name = '{} {}'.format(first_name, second_name)
         print amity.remove_person(person_name)

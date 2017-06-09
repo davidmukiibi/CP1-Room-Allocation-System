@@ -14,7 +14,7 @@ class Amity(object):
         self.rooms = {'offices':{}, 'living_spaces':{}, 'unallocated':{'office': [],\
                                                                     'living_space': [],},}
     
-    def create_room(self, room_name, room_type):
+    def create_room(self, room_type, room_name):
         """this method creates a room, either an office or a living space
         and adds it to the respectives dictionary values"""
         if room_name.isalpha() and room_type.isalpha():
@@ -25,13 +25,13 @@ class Amity(object):
             elif room_type.lower() == 'l':
                 lspace = LivingSpace(room_name=room_name, room_type='l')
                 self.rooms['living_spaces'].update({lspace.room_name: lspace.occupants
-                                                   })
+                                                })
                 return '{} living space created successfully.'.format(lspace.room_name)
             else:
                 return '{} wrong room type entered.'.format(room_type)
         else:
             return 'Either {} or {} is not a string, please check and try again!'.format(room_name,
-                                                                                         room_type)
+                                                                                        room_type)
 
     def add_person(self, first_name, second_name, person_type, lspace_option):
         """this method adds a person to the system and assigns them an office and/or
