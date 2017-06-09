@@ -219,7 +219,7 @@ class Amity(object):
                     lspace_option = "N"
                 else:
                     lspace_option = words_list[3]
-                self.add_person(first_name, second_name, person_type, lspace_option)
+            self.add_person(first_name, second_name, person_type, lspace_option)
         return "People were loaded successfully!"
 
     def load_rooms(self, filename):
@@ -291,6 +291,7 @@ class Amity(object):
                         print '{}'.format(each_room)
                         for numbering, people in enumerate(room_occupants, 1):
                             print numbering, people.person_name
+                        return people.person_name
                     else:
                         print '{} is empty at the moment!'.format(each_room)
                 for each_room, room_occupants in self.rooms['living_spaces'].items():
@@ -298,6 +299,7 @@ class Amity(object):
                         print '{}'.format(each_room)
                         for numbering, people in enumerate(room_occupants, 1):
                             print numbering, people.person_name
+                        return people.person_name
                     else:
                         print '{} is empty at the moment!'.format(each_room)
             else:
@@ -452,8 +454,7 @@ class Amity(object):
         """method re-allocates a person from one room to another"""
         persons_name = '{} {}'.format(first_name, second_name)
         all_people = [] # This list is populated with all people in both offices and living spaces.
-        all_ls = [] # This list is populated with all living spaces in amity.
-        all_offices = [] # This list is populated with all offices in amity.
+
         for each_value in self.rooms['offices'].values(): # populating the above people list with people in offices.
             for each_person in each_value:
                 all_people.append(each_person.person_name)
@@ -469,13 +470,9 @@ class Amity(object):
                     if people_list:
                         for each_person in people_list:
                             if persons_name == each_person.person_name:
-                                if new_room_name == room:
-                                    return 'can not reallocate {} to {} they alreay exist in.'.format(each_person.person_name, room)
-                                else:
-                                    self.rooms['offices'][room].remove(each_person)
-                                    self.rooms['offices'][new_room_name].append(each_person)
-                                    return 'added person to {}'.format(new_room_name)
-                                    print 'You can not reallocate {} to {} which they already exist in.'.format(persons_name, room)
+                                self.rooms['offices'][room].remove(each_person)
+                                self.rooms['offices'][new_room_name].append(each_person)
+                                return 'added person to {}'.format(new_room_name)
                             else:
                                 self.rooms['offices'][new_room_name].append(each_person)
                                 return 'added person to {}'.format(new_room_name)            
@@ -488,17 +485,13 @@ class Amity(object):
                     if people_list:
                         for each_person in people_list:
                             if persons_name == each_person.person_name:
-                                if new_room_name == room:
-                                    return 'can not reallocate {} to {} they alreay exist in.'.format(each_person.person_name, room)
-                                    # checking if person exists in living spaces.
+                                if each_person.person_type == 'FELLOW':
+                                    self.rooms['living_spaces'][room].remove(each_person)
+                                    print 'removed person from room'
+                                    self.rooms['living_spaces'][new_room_name].append(each_person)
+                                    return 'added person to {}'.format(new_room_name)        
                                 else:
-                                    if each_person.person_type == 'FELLOW':
-                                       self.rooms['living_spaces'][room].remove(each_person)
-                                       print 'removed person from room'
-                                       self.rooms['living_spaces'][new_room_name].append(each_person)
-                                       return 'added person to {}'.format(new_room_name)        
-                                    else:
-                                        return '{} is not a fellow hence can not be reallocated to a living space.'.format(persons_name)
+                                    return '{} is not a fellow hence can not be reallocated to a living space.'.format(persons_name)
                             else:
                                self.rooms['living_spaces'][new_room_name].append(each_person)
                                return 'added person to {}'.format(new_room_name)
