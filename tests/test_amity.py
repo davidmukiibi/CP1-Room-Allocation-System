@@ -160,7 +160,9 @@ class AmityTests(unittest.TestCase):
     def test_printing_allocations_to_screen(self):
         """testing that printing to the screen works"""
         self.amity.create_room('jamaica', 'o')
-        self.assertIn('jamaica', self.amity.print_allocations())
+        self.amity.create_room('oculus', 'l')
+        self.amity.add_person('david', 'scott', 'FELLOW', 'Y')
+        self.assertIn('david scott', self.amity.print_allocations())
 
     def test_removing_none_empty_room(self):
         """testing that removing a none empty room cant happen"""
