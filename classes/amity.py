@@ -38,13 +38,13 @@ class Amity(object):
             return 'Either {} or {} is not a string, please check and try again!'.format(room_name,
                                                                                         room_type)
 
-    def add_person(self, first_name, second_name, person_type, lspace_option):
+    def add_person(self, first_name, second_name, person_type, lspace):
         """this method adds a person to the system and assigns them an office and/or
         living space if they are eligible and/or if they with to opt for it."""
 
-        if first_name.isalpha() and second_name.isalpha() and person_type.isalpha() and lspace_option.isalpha():
-            fellow = Fellow(first_name, second_name, 'FELLOW', lspace_option)
-            staff = Staff(first_name, second_name, 'STAFF', lspace_option)
+        if first_name.isalpha() and second_name.isalpha() and person_type.isalpha() and lspace.isalpha():
+            fellow = Fellow(first_name, second_name, 'FELLOW')
+            staff = Staff(first_name, second_name, 'STAFF')
             chosen_room = random.choice(self.rooms['offices'].keys())
             chosen_ls = random.choice(self.rooms['living_spaces'].keys())
 
@@ -57,7 +57,7 @@ class Amity(object):
                     if person.person_name == '{} {}'.format(first_name, second_name):
                         return 'person already exists in amity.'
 
-            if (person_type.upper() == 'STAFF') and (staff.lspace_option.upper() == 'N'):
+            if (person_type.upper() == 'STAFF') and (lspace.upper() == 'N'):
                 if self.rooms['offices']: 
                     if len(self.rooms['offices'][chosen_room]) < 6:
                         self.rooms['offices'][chosen_room].append(staff)
@@ -69,9 +69,8 @@ class Amity(object):
                 else:
                     return 'No offices avalaible at the moment, contact facilities dept!'
 
-            elif (person_type.upper() == 'FELLOW') and (lspace_option.upper() == 'N'):
+            elif (person_type.upper() == 'FELLOW') and (lspace.upper() == 'N'):
                 if self.rooms['offices']:
-                    
                     if len(self.rooms['offices'][chosen_room]) < 6:
                         self.rooms['offices'][chosen_room].append(fellow)
                         fellow.allocated_office = chosen_room
@@ -84,7 +83,8 @@ class Amity(object):
                     self.rooms['unallocated']['office'].append(fellow)
                     return 'No offices available at the time.'
 
-            elif (person_type.upper() == 'FELLOW') and (lspace_option.upper() == 'Y'):
+            elif (person_type.upper() == 'FELLOW') and (lspace.upper() == 'Y'):
+                fellow.lspace_option = 'Y'
                 if self.rooms['offices']:
                     # for an_office, occupants in self.rooms['offices'].items():
                     if len(self.rooms['offices'][chosen_room]) < 6:
@@ -523,4 +523,3 @@ class Amity(object):
                 return '{} does not exist in amity.'.format(new_room_name)
         else:
             return '{} does not exist in amity.'.format(persons_name)
-
