@@ -2,7 +2,7 @@
 [![DAVID MUKIIBI](https://img.shields.io/badge/DAVID%20MUKIIBI-Room%20Allocation%20System-green.svg)]()
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/d42abc6c229a4094b8db899d43c75b49/badge.svg)](https://www.quantifiedcode.com/app/project/d42abc6c229a4094b8db899d43c75b49)
 [![Build Status](https://travis-ci.org/davidmukiibi/CP1-Room-Allocation-System.svg?branch=develop)](https://travis-ci.org/davidmukiibi/CP1-Room-Allocation-System)
-[![Coverage Status](https://coveralls.io/repos/github/davidmukiibi/CP1-Room-Allocation-System/badge.svg?branch=master)](https://coveralls.io/github/davidmukiibi/CP1-Room-Allocation-System?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/davidmukiibi/CP1-Room-Allocation-System/badge.svg?branch=develop)](https://coveralls.io/github/davidmukiibi/CP1-Room-Allocation-System?branch=develop)
 
 >Amity Room Allocation System.
 
