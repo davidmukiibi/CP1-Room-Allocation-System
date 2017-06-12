@@ -148,6 +148,15 @@ class AmityTests(unittest.TestCase):
         self.assertTrue('david mukiibi' in self.amity.add_person('david', 'mukiibi', 'FELLOW', 'Y'))
         self.assertTrue('State Successfully Saved!' in self.amity.save_state('kenya'))
 
+    def test_save_state_without_db_name_and_data_in_application(self):
+        """tests that data is supplied from the application to the database and saved"""
+        self.amity.create_room('narnia', 'o')
+        self.amity.create_room('hogwarts', 'o')
+        self.amity.create_room('mordor', 'l')
+        self.amity.create_room('oculus', 'l')   
+        self.assertTrue('david mukiibi' in self.amity.add_person('david', 'mukiibi', 'FELLOW', 'Y'))
+        self.assertTrue('State Successfully Saved!' in self.amity.save_state())
+
     def test_allocation_with_no_rooms(self):
         """testing that allocation of person with no rooms doesnt work"""
         self.assertRaises('list index out of range')
