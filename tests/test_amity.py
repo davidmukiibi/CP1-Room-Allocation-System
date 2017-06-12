@@ -79,7 +79,6 @@ class AmityTests(unittest.TestCase):
         self.amity.add_person('David', 'mukiibi', 'FELLOW', 'Y')
         self.assertTrue([] == self.amity.rooms['unallocated']['office'])
         self.assertTrue('No one is unallocated at the moment.' == self.amity.print_unallocated_people())
-        self.assertTrue('No one is unallocated at the moment.' == self.amity.print_unallocated_people())
 
     def test_add_staff_to_living_space(self):
         """testing that adding a staff to a living space doesnt work"""
@@ -171,7 +170,7 @@ class AmityTests(unittest.TestCase):
         self.amity.create_room('jamaica', 'o')
         self.amity.create_room('oculus', 'l')
         self.amity.add_person('david', 'scott', 'FELLOW', 'Y')
-        self.assertIn('david scott', self.amity.print_allocations())
+        self.assertTrue('david scott has been added successfully to office: jamaica' == self.amity.print_allocations())
 
     def test_removing_none_empty_room(self):
         """testing that removing a none empty room cant happen"""
