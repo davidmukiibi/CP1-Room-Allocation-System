@@ -136,19 +136,28 @@ class Amity(object):
 
     def print_unallocated_people(self):
         """Prints all the people without rooms to the screen""" 
-        all_people_without_rooms = []
+        all_people_without_offices = []
+        all_people_without_living_spaces = []
         if self.rooms['unallocated']['office']:
             for person in self.rooms['unallocated']['office']:
-                all_people_without_rooms.append(person)
+                all_people_without_offices.append(person)
 
         if self.rooms['unallocated']['living_space']:
             for person in self.rooms['unallocated']['living_space']:
-                all_people_without_rooms.append(person)
+                all_people_without_living_spaces.append(person)
         
-        if not all_people_without_rooms:
-            return 'No one is unallocated at the moment.'
+        if not all_people_without_offices:
+            return 'Everyone has an office at the moment.'
         else:
-            for numbering, people in enumerate(all_people_without_rooms, 1):
+            print '\n-----People without offices-----'
+            for numbering, people in enumerate(all_people_without_offices, 1):
+                print numbering, people.person_name
+
+        if not all_people_without_living_spaces:
+            return 'Everyone has a living space at the moment.'
+        else:
+            print '\n-----People without living spaces-----'
+            for numbering, people in enumerate(all_people_without_living_spaces, 1):
                 print numbering, people.person_name
 
     def all_the_rooms_in_amity(self):
