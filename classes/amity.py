@@ -411,12 +411,14 @@ class Amity(object):
     def load_state(self, database_name):
         """ Method that loads the saved application state from the database """
         engine = create_engine("sqlite:///" + database_name + ".db")
+        Base.metadata.bind = engine
         session = sessionmaker()
-        session.configure(bind=engine)
+        session.bind = engine
         new_session = session()
+        
         try:
             people = new_session.query(Person).all()
-            the_rooms = new_session.query(Room).all()
+            the_rooms = new_session.query(Room).all()     
             for each_room in the_rooms:
                 if each_room.r_type == "o":
                     # create new office
@@ -430,14 +432,13 @@ class Amity(object):
                     print 'Invalid room type loaded -> {}'.format(each_room.r_type)
             for each_person in people:
                 if each_person.person_type == "STAFF":
-                    staff = Staff(each_person.first_name, each_person.second_name, each_person.person_type,
-                                each_person.lspace_option)
+                    staff = Staff(each_person.first_name, each_person.second_name, each_person.person_type)
                     if each_person.office_space != None:
                         self.rooms['offices'][each_person.office_space].append(staff)
                     else:
                         self.rooms['unallocated']['office'].append(staff)
                 else:
-                    fellow = Fellow(each_person.first_name, each_person.second_name, each_person.person_type, each_person.lspace_option)
+                    fellow = Fellow(each_person.first_name, each_person.second_name, each_person.person_type)
                     if each_person.office_space != None:
                         self.rooms['offices'][each_person.office_space].append(fellow)
                     else:
