@@ -166,8 +166,8 @@ class AmityRoomAllocation(cmd.Cmd):
 
     @docopt_cmd
     def do_save_state(self, arg):
-        """Usage: save_state [--o=database_name] """
-        database_name = arg["--o"]
+        """Usage: save_state [--db=database_name] """
+        database_name = arg["--db"]
         if database_name:
             print amity.save_state(database_name)
         else:
