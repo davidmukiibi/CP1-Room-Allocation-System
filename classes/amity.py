@@ -496,6 +496,8 @@ class Amity(object):
                                 self.rooms['offices'][room].remove(person)
                                 self.rooms['offices'][new_room_name].append(person)
                                 return 'reallocation of {} successful to {}'.format(persons_name, new_room_name)
+                        else:
+                            return 'Can not reallocate {} because has no office yet!'.format(persons_name)    
 
             elif new_room_name in self.rooms['living_spaces'].keys():
                 # checking if room exists in amity living spaces.
@@ -507,7 +509,9 @@ class Amity(object):
                                 else:
                                     self.rooms['living_spaces'][room].remove(each_person)
                                     self.rooms['living_spaces'][new_room_name].append(each_person)
-                                    return '{} successfully added to {}'.format(persons_name, new_room_name)        
+                                    return '{} successfully added to {}'.format(persons_name, new_room_name)
+                            else:
+                                return 'Can not reallocate {} because has no living space yet, or may be staff!'.format(persons_name)      
             else:
                 return '{} does not exist in amity.'.format(new_room_name)
         else:
