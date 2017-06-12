@@ -8,7 +8,6 @@ class Room(object):
         self.room_name = room_name
         self.room_type = room_type
 
-
 class LivingSpace(Room):
     """living space blueprint but also inherits from the Room class"""
 
