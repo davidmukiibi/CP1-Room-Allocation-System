@@ -65,6 +65,7 @@ def intro():
 
 
 class AmityRoomAllocation(cmd.Cmd):
+    """This class controls my command line user interface, all the commands and the appearance lies in here."""
 
     os.system("clear")
 
