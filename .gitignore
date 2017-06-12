@@ -9,7 +9,6 @@ classes/.DS_Store
 classes/person.pyc
 classes/room.pyc
 .coverage
-.coveragerc
 .vscode/
 classes/.coverage
 classes/htmlcov/
