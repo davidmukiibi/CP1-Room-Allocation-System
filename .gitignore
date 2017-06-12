@@ -1,0 +1,15 @@
+classes/database_tables.pyc
+.DS_Store
+tests/.DS_Store
+tests/.pyc
+classes/.pyc
+classes/.vscode/
+*.pyc
+classes/.DS_Store
+classes/person.pyc
+classes/room.pyc
+.coverage
+.vscode/
+classes/.coverage
+classes/htmlcov/
+classes/.DS_Store

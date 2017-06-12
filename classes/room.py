@@ -7,7 +7,6 @@ class Room(object):
     def __init__(self, room_name, room_type):
         self.room_name = room_name
         self.room_type = room_type
-        
 
 class LivingSpace(Room):
     """living space blueprint but also inherits from the Room class"""
@@ -16,7 +15,7 @@ class LivingSpace(Room):
         super(LivingSpace, self).__init__(room_name, room_type)
         self.name = room_name
         self.type = room_type
-        self.living_space_occupants = []
+        self.occupants = []
 
 class Office(Room):
     """office object blueprint but also inherits from the Room class"""
@@ -25,4 +24,4 @@ class Office(Room):
         super(Office, self).__init__(room_name, room_type)
         self.name = room_name
         self.type = room_type
-        self.office_occupants = []
+        self.occupants = []
