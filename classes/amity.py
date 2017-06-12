@@ -324,7 +324,7 @@ class Amity(object):
                     else:
                         print '{} is empty at the moment!'.format(each_room)
             else:
-                return 'No one is allocated in offices at the moment.'
+                return 'No one is allocated in offices or living spaces at the moment.'
         else:
             # Creating the file with the given filename, writing to it and saving it.
             print "Saving output data to file..."
